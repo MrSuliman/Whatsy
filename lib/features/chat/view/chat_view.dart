@@ -24,7 +24,7 @@ class ChatView extends StatelessWidget {
                 : null,
           ),
           title: Text(
-            userModel?.name ?? 'Unknown',
+            userModel?.name ?? 'Unknownssss',
             style: Theme.of(context).textTheme.titleLarge,
           ),
           subtitle: Text(
