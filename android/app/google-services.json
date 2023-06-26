@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "522293030949",
+    "project_id": "whatsy-f2994",
+    "storage_bucket": "whatsy-f2994.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522293030949:android:c68fa20451aa172fc98fcc",
+        "android_client_info": {
+          "package_name": "com.example.whatsy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522293030949-s7304sl3lsp76e2difd057s1va0n35oc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw53P5LNpQbP7foBQ8F69ivbunOekX77U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522293030949-s7304sl3lsp76e2difd057s1va0n35oc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
