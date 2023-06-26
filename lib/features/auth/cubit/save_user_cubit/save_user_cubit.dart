@@ -27,7 +27,6 @@ class SaveUserCubit extends Cubit<SaveUserState> {
     final userCollection = FirebaseFirestore.instance.collection('users');
 
     String uId = currentUser!.uid;
-
     try {
       final imageUrl = await storeFileToStorage(
         file: BlocProvider.of<PickImgCubit>(context).galleryImg ??

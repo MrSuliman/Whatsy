@@ -7,6 +7,7 @@ import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'core/helper/service_location.dart';
 import 'core/theme/dark_theme.dart';
@@ -33,6 +34,9 @@ Future<void> main() async {
         ),
         BlocProvider<SaveUserCubit>(
           create: (context) => getIt.get<SaveUserCubit>(),
+        ),
+        BlocProvider<ChatCubit>(
+          create: (context) => getIt.get<ChatCubit>(),
         ),
       ],
       child: const Whatsy(),

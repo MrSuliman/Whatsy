@@ -4,10 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/helper/service_location.dart';
+import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/features/auth/view/gallery_view.dart';
 import 'package:whatsy/features/auth/view/lgoin_view.dart';
 import 'package:whatsy/features/auth/view/profile_info_view.dart';
 import 'package:whatsy/features/auth/view/verification_view.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/chat/view/chat_view.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'package:whatsy/features/contact/view/contact_view.dart';
@@ -71,8 +73,9 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/chat',
-        builder: (context, state) => const ChatView(),
-
+        builder: (context, state) => ChatView(
+          userModel: state.extra as UserModel,
+        ),
       ),
     ],
   );
