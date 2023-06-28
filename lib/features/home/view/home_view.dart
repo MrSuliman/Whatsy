@@ -32,7 +32,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   void dispose() {
     timer.cancel();
-    BlocProvider.of<ChatCubit>(context).close();
     super.dispose();
   }
 
