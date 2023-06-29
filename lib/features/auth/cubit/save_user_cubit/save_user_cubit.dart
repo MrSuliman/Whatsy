@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/model/state_model.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
@@ -23,34 +25,31 @@ class SaveUserCubit extends Cubit<SaveUserState> {
       context,
       text: 'Saving user info ...',
     );
-    final User? currentUser = FirebaseAuth.instance.currentUser;
+    final FirebaseAuth auth = FirebaseAuth.instance;
     final userCollection = FirebaseFirestore.instance.collection('users');
+    final FirebaseDatabase realTime = FirebaseDatabase.instance;
 
-    String uId = currentUser!.uid;
     try {
       final imageUrl = await storeFileToStorage(
         file: BlocProvider.of<PickImgCubit>(context).galleryImg ??
             BlocProvider.of<PickImgCubit>(context).cameraImg ??
             '',
-        path: 'profile_image/$uId',
+        path: 'profile_image/${auth.currentUser!.uid}',
       );
 
       UserModel user = UserModel(
-        id: uId,
+        id: auth.currentUser!.uid,
         name: name,
         imageUrl: imageUrl,
-        phone: currentUser.phoneNumber!,
+        phone: auth.currentUser!.phoneNumber!,
         active: true,
         lastSeen: DateTime.now().microsecondsSinceEpoch,
       );
 
-      await userCollection.doc(uId).set(user.toJson());
-      Navigator.pop(context);
-      GoRouter.of(context).pushReplacement('/home');
+      await userCollection.doc(auth.currentUser!.uid).set(user.toJson());
 
       emit(SaveUserSuccess());
     } catch (e) {
-      Navigator.pop(context);
       emit(SaveUserError(error: e.toString()));
     }
   }

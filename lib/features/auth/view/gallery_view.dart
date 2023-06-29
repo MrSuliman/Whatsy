@@ -25,8 +25,8 @@ class _GalleryViewState extends State<GalleryView> {
       setState(() {
         isMoreLoading = true;
       });
-      BlocProvider.of<PickImgCubit>(context).currentPage++;
-      await BlocProvider.of<PickImgCubit>(context).fetchGallery();
+      getIt.get<PickImgCubit>().currentPage++;
+      await  getIt.get<PickImgCubit>().fetchGallery();
       setState(() {
         isMoreLoading = false;
       });
@@ -36,7 +36,7 @@ class _GalleryViewState extends State<GalleryView> {
   @override
   void initState() {
     _controller.addListener(_scrollListener);
-    BlocProvider.of<PickImgCubit>(context).fetchGallery();
+    getIt.get<PickImgCubit>().fetchGallery();
     super.initState();
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Observer implements BlocObserver {
+class CubitObserver implements BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     debugPrint('CHANGED: $bloc');

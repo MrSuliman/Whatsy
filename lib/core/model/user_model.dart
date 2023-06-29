@@ -30,11 +30,11 @@ class UserModel extends Equatable {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json["id"] ?? '606',
-      name: json["name"] ?? 'Unknown',
-      imageUrl: json["imageUrl"] ?? 'No image',
+      id: json["id"],
+      name: json["name"],
+      imageUrl: json["imageUrl"],
       phone: json["phone"],
-      active: json["active"] ?? 'false',
+      active: json["active"],
       lastSeen: json["lastSeen"],
     );
   }

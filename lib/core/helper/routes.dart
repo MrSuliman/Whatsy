@@ -5,6 +5,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/model/user_model.dart';
+import 'package:whatsy/core/utils/msg_to_user.dart';
+import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
+import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
 import 'package:whatsy/features/auth/view/gallery_view.dart';
 import 'package:whatsy/features/auth/view/lgoin_view.dart';
 import 'package:whatsy/features/auth/view/profile_info_view.dart';
@@ -53,7 +56,17 @@ abstract class Routes {
       GoRoute(
         path: '/profile', // profile
         builder: (context, state) {
-          return const ProfileInfoView();
+          return BlocListener<SaveUserCubit, SaveUserState>(
+            listener: (context, state) {
+              if (state is SaveUserSuccess) {
+                Navigator.pop(context);
+                context.pushReplacement('/home');
+              } else if (state is SaveUserError) {
+                Navigator.pop(context);
+              }
+            },
+            child: const ProfileInfoView(),
+          );
         },
       ),
       GoRoute(
@@ -62,7 +75,14 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => const HomeView(),
+        builder: (context, state) => BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            // if (state is SignOut) {
+            //   context.pushReplacement('/welcome');
+            // }
+          },
+          child: const HomeView(),
+        ),
       ),
       GoRoute(
         path: '/contact',

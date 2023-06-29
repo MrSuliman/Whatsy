@@ -5,8 +5,12 @@ abstract class ChatState {}
 
 class ChatInitial extends ChatState {}
 
-class ChatSuccess extends ChatState {}
+class StateUpdated extends ChatState {}
 
-class ChatError extends ChatState {}
+class StateError extends ChatState {
+  StateError(this.error);
+
+  final String error;
+}
 
 class ChatLoading extends ChatState {}

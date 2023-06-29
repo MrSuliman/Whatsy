@@ -5,8 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/helper/cubit_observer.dart';
+import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
+import 'package:whatsy/features/home/view/home_view.dart';
 
 part 'auth_state.dart';
 
@@ -15,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   String? phoneNumber;
   String? verificationId;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore store = FirebaseFirestore.instance;
 
   // Future<UserModel?> getCurrentUser() async {
@@ -45,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
         context,
         text: 'Sending a verification code to $phoneNumber',
       );
-      await auth.verifyPhoneNumber(
+      await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         codeSent: (String verificationId, int? resendToken) {
           this.phoneNumber = phoneNumber;
@@ -99,16 +103,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signIn(PhoneAuthCredential credential) async {
-    await auth.signInWithCredential(credential);
+    await _auth.signInWithCredential(credential);
     emit(PhoneVerified());
   }
 
   Future<void> logOut(BuildContext context) async {
-    await auth.signOut();
-    GoRouter.of(context).pushReplacement('/welcome');
-  }
-
-  User loggedInUserInfo() {
-    return auth.currentUser!;
+    await _auth.signOut();
+    await getIt.get<ChatCubit>().close();
+    await getIt.get<AuthCubit>().close();
+    if (context.mounted) context.pushReplacement('/welcome');
+    emit(SignOut());
   }
 }

@@ -32,7 +32,6 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
 
   @override
   void dispose() {
-    getIt.get<PickImgCubit>().close();
     getIt.get<SaveUserCubit>().close();
     _nameController!.dispose();
     super.dispose();

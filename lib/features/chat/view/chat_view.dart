@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/avatar_img.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key, required this.userModel});
@@ -44,10 +47,16 @@ class ChatView extends StatelessWidget {
             userModel.name,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-          subtitle: Text(
-            lastSeenFormat(userModel.lastSeen),
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
+          // subtitle: StreamBuilder<UserModel>(
+          //     stream: BlocProvider.of<ChatCubit>(context).getUserStatus(
+          //       id: userModel.id,
+          //     ),
+          //     builder: (context, snapshot) {
+          //       return Text(
+          //         lastSeenFormat(userModel.lastSeen),
+          //         style: Theme.of(context).textTheme.labelLarge,
+          //       );
+          //     }),
         ),
       ).appBar(context),
     );

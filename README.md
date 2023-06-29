@@ -10,4 +10,6 @@
   screens.
 
 # unable to process request due to missing initial state. this may happen if browser session storages inaccessible or accidentally cleared.
--
+
+### very important
+# To update data in realtime database in ref you should to set dot before writing any path like this [ref('.info/connected)].

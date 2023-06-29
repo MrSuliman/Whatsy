@@ -31,3 +31,8 @@ class PhoneVerified extends AuthState {
   @override
   List<Object?> get props => [];
 }
+
+class SignOut extends AuthState {
+  @override
+  List<Object?> get props => [];
+}

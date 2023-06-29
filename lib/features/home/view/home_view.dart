@@ -1,6 +1,12 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsy/core/helper/app_observer.dart';
+import 'package:whatsy/core/model/state_model.dart';
+import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
@@ -16,22 +22,24 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
-  late Timer timer;
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
+  final AppLifecycleObserver _lifecycleObserver = AppLifecycleObserver();
 
   @override
   void initState() {
-    BlocProvider.of<ChatCubit>(context).updateUserPresence();
-    timer = Timer.periodic(
-      const Duration(minutes: 1),
-      (timer) {},
-    );
     super.initState();
+    WidgetsBinding.instance.addObserver(_lifecycleObserver);
+    _lifecycleObserver.updateUserPrecense(
+      StateModel(
+        active: true,
+        lastSeen: DateTime.now().millisecondsSinceEpoch,
+      ),
+    );
   }
 
   @override
   void dispose() {
-    timer.cancel();
+    WidgetsBinding.instance.removeObserver(_lifecycleObserver);
     super.dispose();
   }
 
