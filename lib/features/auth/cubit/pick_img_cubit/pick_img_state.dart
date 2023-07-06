@@ -9,13 +9,21 @@ class PickedImgInitial extends PickImgState {
 }
 
 class CameraImgPicked extends PickImgState {
+  CameraImgPicked(this.cameraImg);
+
+  final File? cameraImg;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [cameraImg];
 }
 
 class GalleryImgPicked extends PickImgState {
+  GalleryImgPicked(this.galleryImg);
+
+  final Uint8List? galleryImg;
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [galleryImg];
 }
 
 class GallerySuccess extends PickImgState {
@@ -34,4 +42,9 @@ class PickImgError extends PickImgState {
 
   @override
   List<Object?> get props => [error];
+}
+
+class GalleryLoading extends PickImgState {
+  @override
+  List<Object?> get props => [];
 }

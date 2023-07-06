@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whatsy/core/constant/colors.dart';
-import 'package:whatsy/core/theme/theme_extension.dart';
 
 class CustomIcon extends StatelessWidget {
   const CustomIcon({

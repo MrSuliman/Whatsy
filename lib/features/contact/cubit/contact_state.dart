@@ -14,7 +14,6 @@ class ContactSuccess extends ContactState {
 
 class ContactLoading extends ContactState {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 

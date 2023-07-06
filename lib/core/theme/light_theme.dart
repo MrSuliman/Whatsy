@@ -68,7 +68,7 @@ ThemeData lightTheme() {
       ),
     ),
     textTheme: const TextTheme(
-      // TODO: title used in appbar
+      // * title used in appbar
       titleLarge: TextStyle(
         fontSize: 16,
         color: Colors.white,
@@ -79,18 +79,18 @@ ThemeData lightTheme() {
       titleSmall: TextStyle(
         color: Colors.black,
       ),
-      // TODO: headline used as a title in the body
+      // * headline used as a title in the body
       headlineMedium: TextStyle(
         fontSize: 14,
         color: Colory.greyLight,
         fontWeight: FontWeight.w500,
       ),
-      // TODO: body used in body
+      // * body used in body
       bodyMedium: TextStyle(
         color: Colors.black,
           fontWeight: FontWeight.w500
       ),
-      // TODO: label used in appbar & body
+      // * label used in appbar & body
       labelLarge: TextStyle(
         fontSize: 12,
         color: Colors.white,

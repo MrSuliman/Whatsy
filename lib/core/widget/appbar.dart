@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whatsy/core/theme/theme_extension.dart';
-import 'package:whatsy/core/widget/custom_icon.dart';
 
 class CustomAppBar {
   const CustomAppBar({

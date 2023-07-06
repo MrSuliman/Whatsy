@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/constant/colors.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
-import 'package:whatsy/core/utils/loading_dialog.dart';
 import 'package:whatsy/core/utils/send_code_to_phone.dart';
 import 'package:whatsy/core/utils/country_code_picker.dart';
 import 'package:whatsy/core/widget/appbar.dart';

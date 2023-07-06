@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:whatsy/features/auth/widget/image_item.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,27 +14,35 @@ part 'pick_img_state.dart';
 class PickImgCubit extends Cubit<PickImgState> {
   PickImgCubit() : super(PickedImgInitial());
 
+  int limit = 20;
   int currentPage = 0;
+  List<Widget> imagesList = [];
   File? cameraImg;
   Uint8List? galleryImg;
-  List<Widget> imagesList = [];
+  final ScrollController controller = ScrollController();
 
-  Future<void> pickImgFromCamera() async {
+  Future<void> scrollListener() async {
+    if (controller.position.pixels == controller.position.maxScrollExtent) {
+      currentPage++;
+      await fetchGallery();
+    }
+  }
+
+  Future<void> pickImgFromCamera(context) async {
     try {
       final pickedImage = await ImagePicker().pickImage(
         source: ImageSource.camera,
       );
       if (pickedImage != null) {
-        cameraImg = File(pickedImage.path);
         galleryImg = null;
-        emit(CameraImgPicked());
+        cameraImg = File(pickedImage.path);
       }
     } catch (e) {
       emit(PickImgError(error: e.toString()));
     }
   }
 
-  FutureBuilder<Uint8List?> _image(AssetEntity asset) {
+  FutureBuilder<Uint8List?> _pickImgFromGallery(AssetEntity asset) {
     return FutureBuilder(
       future: asset.thumbnailDataWithSize(
         const ThumbnailSize.square(200),
@@ -42,13 +51,9 @@ class PickImgCubit extends Cubit<PickImgState> {
         if (snapshot.connectionState == ConnectionState.done) {
           return ImageItem(
             ontTap: () {
-              Navigator.pop(
-                context,
-                galleryImg = snapshot.data,
-              );
               cameraImg = null;
-              emit(GalleryImgPicked());
-              imagesList.clear();
+              galleryImg = snapshot.data;
+              context.go('/profile', extra: galleryImg);
             },
             image: snapshot.data!,
           );
@@ -70,21 +75,34 @@ class PickImgCubit extends Cubit<PickImgState> {
 
       List<AssetEntity> photos = await albums[0].getAssetListPaged(
         page: currentPage,
-        size: 24,
+        size: limit,
       );
 
-      List<Widget> temp = [];
-      temp.clear();
-
       for (var asset in photos) {
-        temp.add(
-          _image(asset),
-        );
+        imagesList.add(_pickImgFromGallery(asset));
       }
-      imagesList.addAll(temp);
+
+      // int start = (currentPage + 1) * limit;
+      // int end = start + limit;
+      //
+      // for (var i = start; i <= end; i++) {
+      //   imagesList.add(_pickImgFromGallery(photos[i]));
+      // }
+      emit(PickedImgInitial());
       emit(GallerySuccess(images: imagesList));
     } catch (e) {
       emit(PickImgError(error: e.toString()));
     }
   }
 }
+
+// List<Widget> temp = [];
+// temp.clear();
+//
+// for (var asset in photos) {
+//   temp.add(
+//     _pickImgFromGallery(asset),
+//   );
+// }
+// imagesList.addAll(temp);
+// galleryImg = null;

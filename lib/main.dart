@@ -5,16 +5,13 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:whatsy/core/helper/cubit_observer.dart';
 import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
-import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
-import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
-import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
-import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'core/helper/service_location.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  debugPrint('Hello World!');
   FlutterNativeSplash.preserve(
     widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
   );
@@ -28,15 +25,6 @@ Future<void> main() async {
       providers: [
         BlocProvider<AuthCubit>(
           create: (context) => getIt.get<AuthCubit>(),
-        ),
-        BlocProvider<PickImgCubit>(
-          create: (context) => getIt.get<PickImgCubit>(),
-        ),
-        BlocProvider<SaveUserCubit>(
-          create: (context) => getIt.get<SaveUserCubit>(),
-        ),
-        BlocProvider<ChatCubit>(
-          create: (context) => getIt.get<ChatCubit>(),
         ),
       ],
       child: const Whatsy(),

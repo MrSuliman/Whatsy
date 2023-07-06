@@ -16,11 +16,11 @@ class LangBtn extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         splashFactory: NoSplash.splashFactory,
         highlightColor: context.theme.highlightColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            children: const [
+            children: [
               Icon(Icons.language, color: Colory.greenDark),
               SizedBox(width: 10),
               Text(

@@ -1,10 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:whatsy/core/model/state_model.dart';
 import 'package:whatsy/core/model/user_model.dart';
 
 part 'chat_state.dart';

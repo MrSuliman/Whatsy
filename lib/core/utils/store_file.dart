@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 
 Future<String> storeFileToStorage({Object? file, required String path}) async {
   UploadTask? uploadTask;

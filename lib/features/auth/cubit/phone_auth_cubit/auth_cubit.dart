@@ -5,12 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:whatsy/core/helper/cubit_observer.dart';
-import 'package:whatsy/core/helper/service_location.dart';
+import 'package:whatsy/core/helper/app_observer.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
-import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
-import 'package:whatsy/features/home/view/home_view.dart';
 
 part 'auth_state.dart';
 
@@ -68,8 +65,6 @@ class AuthCubit extends Cubit<AuthState> {
               msg: 'Invalid phone number.',
             );
             emit(AuthError(error: 'Invalid phone number.'));
-          } else {
-            emit(AuthError(error: e.toString()));
           }
         },
       );
@@ -108,10 +103,9 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logOut(BuildContext context) async {
+    AppObserver().offlineUser();
+    final navigator = context.pushReplacement('/welcome');
     await _auth.signOut();
-    await getIt.get<ChatCubit>().close();
-    await getIt.get<AuthCubit>().close();
-    if (context.mounted) context.pushReplacement('/welcome');
-    emit(SignOut());
+    navigator;
   }
 }

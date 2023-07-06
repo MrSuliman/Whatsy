@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:whatsy/features/home/widget/floating_btn.dart';
 
 class CallView extends StatelessWidget {
@@ -12,8 +11,7 @@ class CallView extends StatelessWidget {
         child: Text('Call View'),
       ),
       floatingActionButton: FloatingBtn(
-        onPressed: () {
-        },
+        onPressed: () {},
         icon: Icons.call,
       ),
     );

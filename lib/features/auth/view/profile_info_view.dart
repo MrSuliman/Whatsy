@@ -1,17 +1,22 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_btn.dart';
 import 'package:whatsy/core/widget/custom_input.dart';
-import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
 import 'package:whatsy/features/auth/widget/profile_avatar.dart';
 
 class ProfileInfoView extends StatefulWidget {
-  const ProfileInfoView({Key? key}) : super(key: key);
+  const ProfileInfoView({
+    Key? key,
+    this.galleryImg,
+    this.cameraImg,
+  }) : super(key: key);
+  final File? cameraImg;
+  final Uint8List? galleryImg;
 
   @override
   State<ProfileInfoView> createState() => _ProfileInfoViewState();
@@ -26,15 +31,14 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
 
   @override
   void initState() {
-    _nameController = TextEditingController();
     super.initState();
+    _nameController = TextEditingController();
   }
 
   @override
   void dispose() {
-    getIt.get<SaveUserCubit>().close();
-    _nameController!.dispose();
     super.dispose();
+    _nameController!.dispose();
   }
 
   @override
@@ -66,9 +70,12 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
                     color: context.theme.greyColor,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(40, 24, 40, 24),
-                  child: AvatarImg(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(40, 24, 40, 24),
+                  child: AvatarImg(
+                    cameraImg: widget.cameraImg,
+                    galleryImg: widget.galleryImg,
+                  ),
                 ),
                 Row(
                   children: [

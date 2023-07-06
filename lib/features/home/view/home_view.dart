@@ -1,15 +1,8 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsy/core/helper/app_observer.dart';
 import 'package:whatsy/core/model/state_model.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
-import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/home/view/call_view.dart';
 import 'package:whatsy/features/home/view/main_home_view.dart';
 import 'package:whatsy/features/home/view/group_view.dart';
@@ -23,26 +16,28 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
-  final AppLifecycleObserver _lifecycleObserver = AppLifecycleObserver();
+  final appObserver = AppObserver();
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(_lifecycleObserver);
-    _lifecycleObserver.updateUserPrecense(
+    WidgetsBinding.instance.addObserver(appObserver);
+    appObserver.onlineUser(
       StateModel(
         active: true,
         lastSeen: DateTime.now().millisecondsSinceEpoch,
       ),
     );
+    super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(_lifecycleObserver);
+    appObserver.offlineUser();
+    WidgetsBinding.instance.removeObserver(appObserver);
     super.dispose();
   }
 
+  @override
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

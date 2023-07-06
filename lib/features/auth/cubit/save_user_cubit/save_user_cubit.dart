@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:whatsy/core/model/state_model.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/utils/store_file.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 
@@ -27,7 +23,6 @@ class SaveUserCubit extends Cubit<SaveUserState> {
     );
     final FirebaseAuth auth = FirebaseAuth.instance;
     final userCollection = FirebaseFirestore.instance.collection('users');
-    final FirebaseDatabase realTime = FirebaseDatabase.instance;
 
     try {
       final imageUrl = await storeFileToStorage(

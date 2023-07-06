@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
-import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/core/widget/loading.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 
@@ -16,34 +13,22 @@ class GalleryView extends StatefulWidget {
 }
 
 class _GalleryViewState extends State<GalleryView> {
-  bool isMoreLoading = false;
-  final ScrollController _controller = ScrollController();
-
-  Future<void> _scrollListener() async {
-    if (isMoreLoading) return;
-    if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-      setState(() {
-        isMoreLoading = true;
-      });
-      getIt.get<PickImgCubit>().currentPage++;
-      await  getIt.get<PickImgCubit>().fetchGallery();
-      setState(() {
-        isMoreLoading = false;
-      });
-    }
-  }
+  // final ScrollController _controller = ScrollController();
+  //
+  // Future<void> _scrollListener() async {
+  //   if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+  //     BlocProvider.of<PickImgCubit>(context).currentPage++;
+  //     await BlocProvider.of<PickImgCubit>(context).fetchGallery();
+  //   }
+  // }
 
   @override
   void initState() {
-    _controller.addListener(_scrollListener);
-    getIt.get<PickImgCubit>().fetchGallery();
+    BlocProvider.of<PickImgCubit>(context).controller.addListener(
+          BlocProvider.of<PickImgCubit>(context).scrollListener,
+        );
+    BlocProvider.of<PickImgCubit>(context).fetchGallery();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -67,7 +52,7 @@ class _GalleryViewState extends State<GalleryView> {
             return Padding(
               padding: const EdgeInsets.all(4),
               child: GridView.builder(
-                controller: _controller,
+                controller: BlocProvider.of<PickImgCubit>(context).controller,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                 ),
@@ -78,9 +63,12 @@ class _GalleryViewState extends State<GalleryView> {
               ),
             );
           } else if (state is PickImgError) {
-            showMsgToUser(context: context, msg: state.error);
+            return Center(
+              child: Text(state.error),
+            );
+          } else {
+            return const Loading();
           }
-          return const Loading();
         },
       ),
     );

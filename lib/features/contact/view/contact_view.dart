@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:whatsy/core/constant/colors.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/core/widget/loading.dart';
@@ -11,9 +8,7 @@ import 'package:whatsy/features/contact/widget/contact_counting.dart';
 import 'package:whatsy/features/contact/widget/contact_on_whatsy.dart';
 import 'package:whatsy/features/contact/widget/contact_top_tile.dart';
 import 'package:whatsy/features/contact/widget/invite_to_whatsy.dart';
-import 'package:whatsy/features/contact/widget/option_tile.dart';
 import 'package:whatsy/features/contact/widget/contact_bottom_tile.dart';
-import 'package:whatsy/features/contact/widget/contact_tile.dart';
 import 'package:whatsy/features/contact/widget/contact_title.dart';
 
 class ContactView extends StatefulWidget {
@@ -28,6 +23,11 @@ class _ContactViewState extends State<ContactView> {
   void initState() {
     BlocProvider.of<ContactCubit>(context).fetchContacts();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

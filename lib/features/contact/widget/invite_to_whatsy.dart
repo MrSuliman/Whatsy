@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/share_sms_link.dart';
 import 'package:whatsy/features/contact/widget/contact_tile.dart';
