@@ -39,7 +39,7 @@ class _VerificationViewState extends State<VerificationView> {
         child: Scaffold(
           appBar: CustomAppBar(
             backgroundColor: Colors.transparent,
-            // TODO: make the navigation pushReplacement and make below this false
+            // * make the navigation pushReplacement and make below this false
             title: Text(
               'Verify your number',
               style: TextStyle(

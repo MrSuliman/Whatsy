@@ -11,7 +11,6 @@ import 'core/theme/light_theme.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  debugPrint('Hello World!');
   FlutterNativeSplash.preserve(
     widgetsBinding: WidgetsFlutterBinding.ensureInitialized(),
   );
