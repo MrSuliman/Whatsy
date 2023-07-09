@@ -12,13 +12,11 @@ import 'package:whatsy/features/auth/view/lgoin_view.dart';
 import 'package:whatsy/features/auth/view/profile_info_view.dart';
 import 'package:whatsy/features/auth/view/verification_view.dart';
 import 'package:whatsy/features/chat/view/chat_view.dart';
+import 'package:whatsy/features/chat/view/info_view.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'package:whatsy/features/contact/view/contact_view.dart';
 import 'package:whatsy/features/home/view/home_view.dart';
 import 'package:whatsy/features/welcome/view/welcome_view.dart';
-
-HomeView home = const HomeView();
-WelcomeView welcome = const WelcomeView();
 
 abstract class Routes {
   static final router = GoRouter(
@@ -31,10 +29,10 @@ abstract class Routes {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 FlutterNativeSplash.remove();
-                return home;
+                return const HomeView();
               } else {
                 FlutterNativeSplash.remove();
-                return welcome;
+                return const WelcomeView();
               }
             },
           );
@@ -42,7 +40,7 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/welcome',
-        builder: (context, state) => welcome,
+        builder: (context, state) => const WelcomeView(),
       ),
       GoRoute(
         path: '/login', // login
@@ -64,17 +62,9 @@ abstract class Routes {
                 create: (context) => PickImgCubit(),
               ),
             ],
-            child: BlocListener<SaveUserCubit, SaveUserState>(
-              listener: (context, state) {
-                if (state is SaveUserSuccess) {
-                  Navigator.pop(context);
-                  context.pushReplacement('/home');
-                }
-              },
-              child: ProfileInfoView(
-                // cameraImg: state.extra as File?,
-                galleryImg: state.extra as Uint8List?,
-              ),
+            child: ProfileInfoView(
+              // cameraImg: state.extra as File?,
+              galleryImg: state.extra as Uint8List?,
             ),
           );
         },
@@ -90,7 +80,7 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/home',
-        builder: (context, state) => home,
+        builder: (context, state) => const HomeView(),
       ),
       GoRoute(
         path: '/contact',
@@ -102,6 +92,12 @@ abstract class Routes {
       GoRoute(
         path: '/chat',
         builder: (context, state) => ChatView(
+          userModel: state.extra as UserModel,
+        ),
+      ),
+      GoRoute(
+        path: '/info',
+        builder: (context, state) => InfoView(
           userModel: state.extra as UserModel,
         ),
       ),

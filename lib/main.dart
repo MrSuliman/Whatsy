@@ -5,9 +5,11 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:whatsy/core/helper/cubit_observer.dart';
 import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
+import 'package:whatsy/features/auth/view/profile_info_view.dart';
 import 'core/helper/service_location.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/light_theme.dart';
+import 'features/auth/cubit/save_user_cubit/save_user_cubit.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -24,6 +26,10 @@ Future<void> main() async {
       providers: [
         BlocProvider<AuthCubit>(
           create: (context) => getIt.get<AuthCubit>(),
+        ),
+        BlocProvider<SaveUserCubit>(
+          create: (context) => SaveUserCubit(),
+          child: const ProfileInfoView(),
         ),
       ],
       child: const Whatsy(),

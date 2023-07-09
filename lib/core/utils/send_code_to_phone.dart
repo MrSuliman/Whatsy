@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
 
@@ -31,7 +31,7 @@ sendCodeToPhone({
           'The phone number you entered is too long for the country $countryName.',
     );
   } else {
-    BlocProvider.of<AuthCubit>(context).sendSmsCode(
+    getIt.get<AuthCubit>().sendSmsCode(
       context: context,
       phoneNumber: '+$countryCode$phoneNumber',
     );

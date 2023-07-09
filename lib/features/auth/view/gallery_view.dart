@@ -13,15 +13,6 @@ class GalleryView extends StatefulWidget {
 }
 
 class _GalleryViewState extends State<GalleryView> {
-  // final ScrollController _controller = ScrollController();
-  //
-  // Future<void> _scrollListener() async {
-  //   if (_controller.position.pixels == _controller.position.maxScrollExtent) {
-  //     BlocProvider.of<PickImgCubit>(context).currentPage++;
-  //     await BlocProvider.of<PickImgCubit>(context).fetchGallery();
-  //   }
-  // }
-
   @override
   void initState() {
     BlocProvider.of<PickImgCubit>(context).controller.addListener(

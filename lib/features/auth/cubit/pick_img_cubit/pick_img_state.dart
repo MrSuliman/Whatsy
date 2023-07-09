@@ -43,8 +43,3 @@ class PickImgError extends PickImgState {
   @override
   List<Object?> get props => [error];
 }
-
-class GalleryLoading extends PickImgState {
-  @override
-  List<Object?> get props => [];
-}

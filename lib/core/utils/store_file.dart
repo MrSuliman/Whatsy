@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 
-Future<String> storeFileToStorage({Object? file, required String path}) async {
+Future<String> storeFileToStorage({var file, required String path}) async {
   UploadTask? uploadTask;
   Reference storage = FirebaseStorage.instance.ref().child(path);
 

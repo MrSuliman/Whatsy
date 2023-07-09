@@ -19,7 +19,7 @@ class CustomInput extends StatelessWidget {
     this.validateText,
     this.letterSpacing,
     this.maxLength,
-    this.validator,
+    this.counterText,
   }) : super(key: key);
 
   final void Function()? onTap;
@@ -36,12 +36,11 @@ class CustomInput extends StatelessWidget {
   final String? validateText;
   final double? letterSpacing;
   final int? maxLength;
-  final String? Function(String?)? validator;
+  final String? counterText;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      validator: validator,
       onTap: onTap,
       onChanged: onChanged,
       controller: controller,
@@ -54,6 +53,7 @@ class CustomInput extends StatelessWidget {
       ),
       maxLength: maxLength,
       decoration: InputDecoration(
+        counterText: counterText,
         isDense: true,
         suffix: suffixIcon,
         prefixText: prefixText,

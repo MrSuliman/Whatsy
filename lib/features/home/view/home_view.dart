@@ -38,7 +38,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,

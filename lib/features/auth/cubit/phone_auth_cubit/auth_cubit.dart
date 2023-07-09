@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/helper/app_observer.dart';
-import 'package:whatsy/core/utils/msg_to_user.dart';
+import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
 
 part 'auth_state.dart';
@@ -17,25 +17,15 @@ class AuthCubit extends Cubit<AuthState> {
   String? phoneNumber;
   String? verificationId;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore store = FirebaseFirestore.instance;
+  final FirebaseFirestore _store = FirebaseFirestore.instance;
 
-  // Future<UserModel?> getCurrentUser() async {
-  //   UserModel? user;
-  //   final userInfo = await FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(auth.currentUser?.uid)
-  //       .get();
-  //   try {
-  //     if (userInfo.data() == null) return user;
-  //
-  //     user = UserModel.fromJson(userInfo.data()!);
-  //     // emit(CurrentUser());
-  //     return user;
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //     emit(AuthError(error: e.toString()));
-  //   }
-  // }
+  Stream<UserModel> getUserPresence(String id) {
+    return _store
+        .collection('users')
+        .doc(id)
+        .snapshots()
+        .map((event) => UserModel.fromJson(event.data()!));
+  }
 
   Future<void> sendSmsCode({
     required BuildContext context,
@@ -60,11 +50,8 @@ class AuthCubit extends Cubit<AuthState> {
         verificationFailed: (FirebaseAuthException e) {
           Navigator.pop(context);
           if (e.code == 'invalid-phone-number') {
-            showMsgToUser(
-              context: context,
-              msg: 'Invalid phone number.',
-            );
             emit(AuthError(error: 'Invalid phone number.'));
+            emit(AuthInitial());
           }
         },
       );
@@ -91,6 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
     } on FirebaseAuthException catch (_) {
       Navigator.pop(context);
       emit(AuthError(error: 'Invalid sms code, check again.'));
+      emit(AuthInitial());
     } catch (_) {
       Navigator.pop(context);
       emit(AuthError(error: 'Something went wrong, resend sms code.'));
@@ -104,8 +92,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> logOut(BuildContext context) async {
     AppObserver().offlineUser();
-    final navigator = context.pushReplacement('/welcome');
     await _auth.signOut();
-    navigator;
+    context.pushReplacement('/welcome');
   }
 }

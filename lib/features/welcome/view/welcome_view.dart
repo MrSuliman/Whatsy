@@ -31,7 +31,7 @@ class WelcomeView extends StatelessWidget {
                 const PrivacyPolicy(),
                 CustomBtn(
                   onPressed: () {
-                    GoRouter.of(context).pushReplacement('/login');
+                    context.pushReplacement('/login');
                   },
                   text: "AGREE AND CONTINUE",
                 ),

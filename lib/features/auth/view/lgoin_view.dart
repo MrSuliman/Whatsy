@@ -49,10 +49,10 @@ class _LoginViewState extends State<LoginView> {
       },
       listener: (context, state) {
         if (state is PhoneVerified) {
-          GoRouter.of(context).pushReplacement('/profile');
+         context.pushReplacement('/profile');
         }
         if (state is SmsCodeSent) {
-          GoRouter.of(context).pushReplacement('/verify');
+          context.pushReplacement('/verify');
         }
         if (state is AuthError) {
           showMsgToUser(context: context, msg: state.error);
@@ -109,12 +109,6 @@ class _LoginViewState extends State<LoginView> {
                           countryNameController: _countryNameController,
                           countryCodeController: _countryCodeController,
                         ),
-                        validator: (val) {
-                          if (val!.trim().isEmpty) {
-                            return '';
-                          }
-                          return '';
-                        },
                         controller: _countryCodeController,
                         prefixText: '+',
                         readOnly: true,
@@ -124,12 +118,6 @@ class _LoginViewState extends State<LoginView> {
                     Expanded(
                       child: CustomInput(
                         onTap: () {},
-                        validator: (val) {
-                          if (val!.trim().isEmpty) {
-                            return '';
-                          }
-                          return '';
-                        },
                         controller: _phoneNumberController,
                         hintText: 'phone number',
                         textAlign: TextAlign.left,

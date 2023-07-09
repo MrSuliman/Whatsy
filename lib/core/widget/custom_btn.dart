@@ -21,7 +21,12 @@ class CustomBtn extends StatelessWidget {
           42,
         ),
       ),
-      child: Text(text),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }

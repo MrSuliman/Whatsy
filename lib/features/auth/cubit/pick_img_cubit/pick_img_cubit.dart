@@ -82,12 +82,6 @@ class PickImgCubit extends Cubit<PickImgState> {
         imagesList.add(_pickImgFromGallery(asset));
       }
 
-      // int start = (currentPage + 1) * limit;
-      // int end = start + limit;
-      //
-      // for (var i = start; i <= end; i++) {
-      //   imagesList.add(_pickImgFromGallery(photos[i]));
-      // }
       emit(PickedImgInitial());
       emit(GallerySuccess(images: imagesList));
     } catch (e) {
@@ -95,14 +89,3 @@ class PickImgCubit extends Cubit<PickImgState> {
     }
   }
 }
-
-// List<Widget> temp = [];
-// temp.clear();
-//
-// for (var asset in photos) {
-//   temp.add(
-//     _pickImgFromGallery(asset),
-//   );
-// }
-// imagesList.addAll(temp);
-// galleryImg = null;

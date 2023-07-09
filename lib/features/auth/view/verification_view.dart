@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/helper/service_location.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
@@ -28,7 +29,7 @@ class _VerificationViewState extends State<VerificationView> {
       },
       listener: (context, state) {
         if (state is PhoneVerified) {
-          GoRouter.of(context).pushReplacement('/profile');
+          context.pushReplacement('/profile');
         }
         if (state is AuthError) {
           showMsgToUser(context: context, msg: state.error);
@@ -66,12 +67,14 @@ class _VerificationViewState extends State<VerificationView> {
                       onChanged: (val) {
                         smsCode = val!;
                         if (val.length == 6) {
-                          BlocProvider.of<AuthCubit>(context).verifySmsCode(
-                            context,
-                            smsCode: smsCode.trim(),
-                          );
+                          getIt.get<AuthCubit>().verifySmsCode(
+                                context,
+                                smsCode: smsCode.trim(),
+                              );
                         }
                       },
+                      maxLength: 6,
+                      counterText: '',
                       hintText: '-----',
                       letterSpacing: 8,
                       fontSize: 26,
