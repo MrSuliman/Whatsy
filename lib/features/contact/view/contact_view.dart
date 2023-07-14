@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsy/core/helper/my_behavior.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/core/widget/loading.dart';
@@ -59,27 +60,30 @@ class _ContactViewState extends State<ContactView> {
             CustomIcon(onPressed: () {}, icon: Icons.more_vert_rounded),
           ],
         ).appBar(context),
-        body: BlocBuilder<ContactCubit, ContactState>(
-          builder: (context, state) {
-            if (state is ContactSuccess) {
-              return CustomScrollView(
-                slivers: [
-                  const ContactTopTile(),
-                  const ContactTitle(title: 'Contacts on whatsy'),
-                  ContactsOnWhatsy(firebaseContact: state.contacts),
-                  const ContactTitle(title: 'Invite to whatsy'),
-                  InviteToWhatsy(phoneContact: state.contacts),
-                  const ContactBottomTile(),
-                ],
-              );
-            } else if (state is ContactError) {
-              return Center(
-                child: Text(state.error),
-              );
-            } else {
-              return const Loading();
-            }
-          },
+        body: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: BlocBuilder<ContactCubit, ContactState>(
+            builder: (context, state) {
+              if (state is ContactSuccess) {
+                return CustomScrollView(
+                  slivers: [
+                    const ContactTopTile(),
+                    const ContactTitle(title: 'Contacts on whatsy'),
+                    ContactsOnWhatsy(firebaseContact: state.contacts),
+                    const ContactTitle(title: 'Invite to whatsy'),
+                    InviteToWhatsy(phoneContact: state.contacts),
+                    const ContactBottomTile(),
+                  ],
+                );
+              } else if (state is ContactError) {
+                return Center(
+                  child: Text(state.error),
+                );
+              } else {
+                return const Loading();
+              }
+            },
+          ),
         ),
       ),
     );

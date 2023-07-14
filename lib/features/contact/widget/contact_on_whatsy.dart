@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/model/user_model.dart';
+import 'package:whatsy/core/utils/is_that_you.dart';
 import 'package:whatsy/features/contact/widget/contact_tile.dart';
 
 class ContactsOnWhatsy extends StatelessWidget {
@@ -26,7 +28,8 @@ class ContactsOnWhatsy extends StatelessWidget {
             icon: firebaseContact[0][index].imageUrl.isEmpty
                 ? Icons.person
                 : null,
-            title: firebaseContact[0][index].name,
+            title:
+                '${firebaseContact[0][index].name} ${isThatYou(firebaseContact[0][index].id, FirebaseAuth.instance.currentUser!.uid)}',
             subtitle: 'Hey there! I\'m using whatsy',
           );
         },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/helper/page_animation.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
@@ -11,8 +12,8 @@ import 'package:whatsy/features/auth/view/gallery_view.dart';
 import 'package:whatsy/features/auth/view/lgoin_view.dart';
 import 'package:whatsy/features/auth/view/profile_info_view.dart';
 import 'package:whatsy/features/auth/view/verification_view.dart';
-import 'package:whatsy/features/chat/view/chat_view.dart';
-import 'package:whatsy/features/chat/view/info_view.dart';
+import 'package:whatsy/features/chat/view/chat/chat_view.dart';
+import 'package:whatsy/features/chat/view/info/info_view.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'package:whatsy/features/contact/view/contact_view.dart';
 import 'package:whatsy/features/home/view/home_view.dart';
@@ -97,10 +98,15 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/info',
-        builder: (context, state) => InfoView(
-          userModel: state.extra as UserModel,
-        ),
+        pageBuilder: (context, state) {
+          return pageAnimation(
+            state: state,
+            page: InfoView(userModel: state.extra as UserModel),
+          );
+        },
       ),
     ],
   );
 }
+
+

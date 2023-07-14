@@ -8,27 +8,30 @@ class ContactBottomTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Column(
-        children: [
-          OptionTile(
-            onTap: () {},
-            title: 'Share invite link',
-            icon: Icons.share,
-            iconColor:
-                MediaQuery.of(context).platformBrightness == Brightness.dark
-                    ? Colory.greyDark
-                    : Colory.greyLight,
-          ),
-          OptionTile(
-            onTap: () {},
-            title: 'Contacts help',
-            icon: Icons.question_mark,
-            iconColor:
-                MediaQuery.of(context).platformBrightness == Brightness.dark
-                    ? Colory.greyDark
-                    : Colory.greyLight,
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Column(
+          children: [
+            OptionTile(
+              onTap: () {},
+              title: 'Share invite link',
+              icon: Icons.share,
+              iconColor:
+                  MediaQuery.of(context).platformBrightness == Brightness.dark
+                      ? Colory.greyDark
+                      : Colory.greyLight,
+            ),
+            OptionTile(
+              onTap: () {},
+              title: 'Contacts help',
+              icon: Icons.question_mark,
+              iconColor:
+                  MediaQuery.of(context).platformBrightness == Brightness.dark
+                      ? Colory.greyDark
+                      : Colory.greyLight,
+            ),
+          ],
+        ),
       ),
     );
   }

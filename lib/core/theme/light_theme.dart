@@ -24,6 +24,9 @@ ThemeData lightTheme() {
         color: Colors.white,
       ),
     ),
+    iconTheme: const IconThemeData(
+      color: Colory.greyLight,
+    ),
     tabBarTheme: const TabBarTheme(
       labelColor: Colors.white,
       unselectedLabelStyle: TextStyle(
@@ -86,22 +89,36 @@ ThemeData lightTheme() {
         fontWeight: FontWeight.w500,
       ),
       // * body used in body
+      bodyLarge: TextStyle(
+        color: Colors.black,
+        fontSize: 22,
+      ),
       bodyMedium: TextStyle(
         color: Colors.black,
           fontWeight: FontWeight.w500
       ),
-      // * label used in appbar & body
+      // * labelLarge used in appbar
       labelLarge: TextStyle(
         fontSize: 12,
         color: Colors.white,
       ),
+      // * labelMedium used in body
       labelMedium: TextStyle(
+        fontSize: 12,
         color: Colory.greyLight,
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
       foregroundColor: Colors.white,
       backgroundColor: Colory.greenLight,
+    ),
+    listTileTheme: const ListTileThemeData(
+      iconColor: Colory.greyDark, 
+      tileColor: Colory.light,
+    ),
+    switchTheme: const SwitchThemeData(
+      thumbColor: MaterialStatePropertyAll(Color(0xFF83939c)),
+      trackColor: MaterialStatePropertyAll(Color(0xFFDADFE2)),
     ),
   );
 }

@@ -9,7 +9,7 @@ class ContactTopTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.only(top: 5.0),
+        padding: const EdgeInsets.only(top: 10),
         child: Column(
           children: [
             OptionTile(

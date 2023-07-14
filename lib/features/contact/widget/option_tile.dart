@@ -21,7 +21,6 @@ class OptionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      dense: true,
       leading: CircleAvatar(
         backgroundColor: iconBg ?? Colory.greyLight.withOpacity(0.3),
         child: Icon(

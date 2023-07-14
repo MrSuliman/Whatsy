@@ -24,10 +24,12 @@ class InviteToWhatsy extends StatelessWidget {
             title: phoneContact[1][index].name,
             subtitle: phoneContact[1][index].phone,
             textBtn: 'INVITE',
-            onPressed: () => shareSmsLink(
-              phoneContact: phoneContact,
-              index: index,
-            ),
+            onPressed: () {
+              shareSmsLink(
+                phoneContact: phoneContact,
+                index: index,
+              );
+            },
           );
         },
       ),
