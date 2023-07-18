@@ -64,6 +64,7 @@ class MyColors extends ThemeExtension<MyColors> {
     greenColor: Colory.greenDark,
     profileBg: Color(0xFF0B141A),
     blockReportColor: Color(0xFFF15c6D),
+    chatInputColor: Colory.bgGrey,
   );
 
   @override

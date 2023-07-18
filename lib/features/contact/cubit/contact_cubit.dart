@@ -55,6 +55,5 @@ class ContactCubit extends Cubit<ContactState> {
       debugPrint(e.toString());
       emit(ContactError(error: 'Something went wrong, Please try again!'));
     }
-    // return [firebaseContacts, phoneContacts];
   }
 }

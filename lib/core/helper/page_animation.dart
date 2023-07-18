@@ -10,7 +10,7 @@ CustomTransitionPage pageAnimation({
     child: page,
     transitionsBuilder: (context, animation, _, child) {
       return FadeTransition(
-        opacity: CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+        opacity: CurveTween(curve: Curves.easeIn).animate(animation),
         child: child,
       );
     },

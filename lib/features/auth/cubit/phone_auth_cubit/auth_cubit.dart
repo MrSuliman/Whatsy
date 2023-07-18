@@ -19,6 +19,15 @@ class AuthCubit extends Cubit<AuthState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _store = FirebaseFirestore.instance;
 
+  Future<UserModel?> getCurrentUserInfo() async {
+    UserModel? user;
+    final userInfo =
+        await _store.collection('users').doc(_auth.currentUser?.uid).get();
+    if (userInfo.data() == null) return user;
+    user = UserModel.fromJson(userInfo.data()!);
+    return user;
+  }
+
   Stream<UserModel> getUserPresence(String id) {
     return _store
         .collection('users')

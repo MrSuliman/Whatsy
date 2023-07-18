@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsy/core/constant/colors.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
+import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 
 class ChatInput extends StatefulWidget {
-  const ChatInput({super.key});
+  const ChatInput({
+    super.key,
+    required this.reciverId,
+  });
+
+  final String reciverId;
 
   @override
   State<ChatInput> createState() => _ChatInputState();
@@ -46,6 +54,9 @@ class _ChatInputState extends State<ChatInput> {
                 );
               },
               controller: msgController,
+              autofocus: true,
+              maxLines: 4,
+              minLines: 1,
               decoration: InputDecoration(
                 hintText: 'Message',
                 isDense: true,
@@ -73,21 +84,33 @@ class _ChatInputState extends State<ChatInput> {
                   ],
                 ),
                 border: OutlineInputBorder(
-                  borderSide:
-                      const BorderSide(width: 0, style: BorderStyle.none),
-                  borderRadius: BorderRadius.circular(100),
+                  borderSide: const BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
                 ),
               ),
             ),
           ),
           const SizedBox(width: 5),
           CustomIcon(
-            onPressed: () {},
+            onPressed: () async {
+              if (isThereMsg) {
+                await BlocProvider.of<ChatCubit>(context).sendMsg(
+                  msg: msgController.text,
+                  reciverId: widget.reciverId,
+                  senderData: await BlocProvider.of<AuthCubit>(context)
+                      .getCurrentUserInfo(),
+                );
+                msgController.clear();
+              }
+            },
             icon: isThereMsg == true
                 ? Icons.send_outlined
                 : Icons.mic_none_rounded,
             color: Colors.white,
-            background: Colory.greyLight,
+            background: Colory.greenDark,
           )
         ],
       ),

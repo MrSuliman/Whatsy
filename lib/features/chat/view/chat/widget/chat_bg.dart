@@ -7,7 +7,7 @@ class ChatBg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image(
-      fit: BoxFit.cover,
+      fit: BoxFit.fill,
       width: double.maxFinite,
       height: double.maxFinite,
       color: context.theme.greyColor,

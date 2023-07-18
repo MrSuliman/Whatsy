@@ -41,7 +41,7 @@ AppBar chatAppBar(BuildContext context, UserModel userModel) {
               Text(
                 '${userModel.name} ${isThatYou(userModel.id, FirebaseAuth.instance.currentUser!.uid)}',
                 softWrap: true,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 3),
               FirebaseAuth.instance.currentUser!.uid != userModel.id

@@ -5,10 +5,14 @@ abstract class ChatState {}
 
 class ChatInitial extends ChatState {}
 
+class MsgSaved extends ChatState {}
+
+class MsgSent extends ChatState {}
+
 class StateUpdated extends ChatState {}
 
-class StateError extends ChatState {
-  StateError(this.error);
+class ChatError extends ChatState {
+  ChatError(this.error);
 
   final String error;
 }

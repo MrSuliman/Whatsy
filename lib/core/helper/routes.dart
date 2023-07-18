@@ -12,6 +12,7 @@ import 'package:whatsy/features/auth/view/gallery_view.dart';
 import 'package:whatsy/features/auth/view/lgoin_view.dart';
 import 'package:whatsy/features/auth/view/profile_info_view.dart';
 import 'package:whatsy/features/auth/view/verification_view.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/chat/view/chat/chat_view.dart';
 import 'package:whatsy/features/chat/view/info/info_view.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
@@ -92,8 +93,11 @@ abstract class Routes {
       ),
       GoRoute(
         path: '/chat',
-        builder: (context, state) => ChatView(
-          userModel: state.extra as UserModel,
+        builder: (context, state) => BlocProvider<ChatCubit>(
+          create: (context) => ChatCubit(),
+          child: ChatView(
+            userModel: state.extra as UserModel,
+          ),
         ),
       ),
       GoRoute(
@@ -108,5 +112,3 @@ abstract class Routes {
     ],
   );
 }
-
-
