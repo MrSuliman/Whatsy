@@ -57,6 +57,10 @@ ThemeData darkTheme() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
+        textStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold
+        ),
         foregroundColor: Colory.greenLight,
         shape: const StadiumBorder()
         
@@ -102,17 +106,23 @@ ThemeData darkTheme() {
         fontSize: 22,
       ),
       bodyMedium: TextStyle(
+        fontSize: 15,
         color: Colors.white,
         fontWeight: FontWeight.w500,
       ),
       // * label used in appbar
       labelLarge: TextStyle(
-        fontSize: 12,
+        fontSize: 13,
         color: Colory.greyDark,
       ),
       // * labelMedium used in body
       labelMedium: TextStyle(
+        fontSize: 13,
+        color: Colory.greyDark,
+      ),
+      labelSmall: TextStyle(
         fontSize: 12,
+        letterSpacing: 0,
         color: Colory.greyDark,
       ),
     ),
@@ -127,6 +137,11 @@ ThemeData darkTheme() {
     switchTheme: const SwitchThemeData(
       thumbColor: MaterialStatePropertyAll(Colory.greyDark),
       trackColor: MaterialStatePropertyAll(Color(0xFF344047)),
+    ),
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: Colory.greenDark,
+      selectionColor: Colory.greenDark,
+      selectionHandleColor: Colory.greenLight,
     ),
   );
 }

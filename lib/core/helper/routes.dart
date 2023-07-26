@@ -1,9 +1,9 @@
 import 'dart:typed_data';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/helper/page_animation.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
@@ -24,10 +24,10 @@ abstract class Routes {
   static final router = GoRouter(
     routes: [
       GoRoute(
-        path: '/',
+        path: start,
         builder: (context, state) {
           return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
+            stream: Db.auth.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 FlutterNativeSplash.remove();
@@ -41,19 +41,19 @@ abstract class Routes {
         },
       ),
       GoRoute(
-        path: '/welcome',
+        path: welcome,
         builder: (context, state) => const WelcomeView(),
       ),
       GoRoute(
-        path: '/login', // login
+        path: login, // login
         builder: (context, state) => const LoginView(),
       ),
       GoRoute(
-        path: '/verify',
+        path: verify,
         builder: (context, state) => const VerificationView(),
       ),
       GoRoute(
-        path: '/profile', // profile
+        path: profile, // profile
         builder: (context, state) {
           return MultiBlocProvider(
             providers: [
@@ -72,7 +72,7 @@ abstract class Routes {
         },
       ),
       GoRoute(
-        path: '/gallery', // picker
+        path: gallery, // picker
         builder: (context, state) {
           return BlocProvider<PickImgCubit>(
             create: (context) => PickImgCubit(),
@@ -81,18 +81,18 @@ abstract class Routes {
         },
       ),
       GoRoute(
-        path: '/home',
+        path: home,
         builder: (context, state) => const HomeView(),
       ),
       GoRoute(
-        path: '/contact',
+        path: contact,
         builder: (context, state) => BlocProvider<ContactCubit>(
           create: (context) => ContactCubit(),
           child: const ContactView(),
         ),
       ),
       GoRoute(
-        path: '/chat',
+        path: chat,
         builder: (context, state) => BlocProvider<ChatCubit>(
           create: (context) => ChatCubit(),
           child: ChatView(
@@ -101,7 +101,7 @@ abstract class Routes {
         ),
       ),
       GoRoute(
-        path: '/info',
+        path: info,
         pageBuilder: (context, state) {
           return pageAnimation(
             state: state,
@@ -112,3 +112,14 @@ abstract class Routes {
     ],
   );
 }
+
+const String start = '/';
+const String welcome = '/welcome';
+const String login = '/login';
+const String verify = '/verify';
+const String profile = '/profile';
+const String gallery = '/gallery';
+const String home = '/home';
+const String contact = '/contact';
+const String chat = '/chat';
+const String info = '/info';

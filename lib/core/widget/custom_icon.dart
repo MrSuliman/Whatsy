@@ -10,6 +10,7 @@ class CustomIcon extends StatelessWidget {
     this.minWidth,
     this.background,
     this.border,
+    this.turns,
   }) : super(key: key);
 
   final IconData icon;
@@ -19,6 +20,7 @@ class CustomIcon extends StatelessWidget {
   final double? minWidth;
   final Color? background;
   final BoxBorder? border;
+  final double? turns;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +30,22 @@ class CustomIcon extends StatelessWidget {
         shape: BoxShape.circle,
         border: border,
       ),
-      child: IconButton(
-        onPressed: onPressed,
-        iconSize: iconSize ?? 22,
-        splashRadius: (minWidth ?? 40) - 25,
-        padding: EdgeInsets.zero,
-        splashColor: Colors.transparent,
-        constraints: BoxConstraints(
-          minWidth: minWidth ?? 40,
-          minHeight: minWidth ?? 40,
-        ),
-        icon: Icon(
-          icon,
-          color: color,
+      child: RotationTransition(
+        turns: AlwaysStoppedAnimation(turns ?? 0),
+        child: IconButton(
+          onPressed: onPressed,
+          iconSize: iconSize ?? 22,
+          splashRadius: (minWidth ?? 40) - 25,
+          padding: EdgeInsets.zero,
+          splashColor: Colors.transparent,
+          constraints: BoxConstraints(
+            minWidth: minWidth ?? 40,
+            minHeight: minWidth ?? 40,
+          ),
+          icon: Icon(
+            icon,
+            color: color,
+          ),
         ),
       ),
     );

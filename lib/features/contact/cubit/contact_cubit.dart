@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/model/user_model.dart';
 
 part 'contact_state.dart';
@@ -12,14 +12,13 @@ class ContactCubit extends Cubit<ContactState> {
 
   List<UserModel> phoneContacts = [];
   List<UserModel> firebaseContacts = [];
-  final firestore = FirebaseFirestore.instance;
 
   Future<void> fetchContacts() async {
     emit(ContactLoading());
     try {
       if (await FlutterContacts.requestPermission()) {
         bool isContactFound = false;
-        final userCollection = await firestore.collection('users').get();
+        final userCollection = await Db.store.collection('users').get();
 
         final allPhoneContacts = await FlutterContacts.getContacts(
           withProperties: true,

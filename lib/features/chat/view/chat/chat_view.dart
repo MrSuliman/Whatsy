@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:whatsy/core/helper/my_behavior.dart';
 import 'package:whatsy/core/model/user_model.dart';
+import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/features/chat/view/chat/widget/chat_app_bar.dart';
 import 'package:whatsy/features/chat/view/chat/widget/chat_bg.dart';
 import 'package:whatsy/features/chat/view/chat/widget/chat_input.dart';
+import 'package:whatsy/features/chat/view/chat/widget/msgs_list.dart';
 
 class ChatView extends StatefulWidget {
-  const ChatView({super.key, required this.userModel});
+  const ChatView({Key? key, required this.userModel}) : super(key: key);
 
   final UserModel userModel;
 
@@ -14,31 +17,50 @@ class ChatView extends StatefulWidget {
 }
 
 class _ChatViewState extends State<ChatView> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  dynamic lasDoc;
+  double containerHeight = 0;
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: chatAppBar(context, widget.userModel),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: [
-            const ChatBg(),
-            Column(
-              children: [
-                Expanded(
-                  child: Container(),
-                ),
-                Form(
-                  key: _formKey,
-                  child: ChatInput(
-                    reciverId: widget.userModel.id,
-                  ),
-                ),
-              ],
-            ),
-          ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        backgroundColor: context.theme.chatPageBg,
+        appBar: chatAppBar(context, widget.userModel),
+        body: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: Stack(
+            children: [
+              const ChatBg(),
+              MsgsList(
+                userModel: widget.userModel,
+                scrollController: _scrollController,
+              ),
+              ChatInput(
+                reciverId: widget.userModel.id,
+                scrollController: _scrollController,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,14 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/widgets.dart';
+import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/model/state_model.dart';
 
 class AppObserver with WidgetsBindingObserver {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _store = FirebaseFirestore.instance;
-  final FirebaseDatabase _realTime = FirebaseDatabase.instance;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -38,15 +32,15 @@ class AppObserver with WidgetsBindingObserver {
   }
 
   void onlineUser(StateModel state) async {
-    if (_auth.currentUser != null) {
-      await _realTime
-          .ref('info/connected')
-          .child(_auth.currentUser!.uid)
+    if (Db.auth.currentUser != null) {
+      await Db.realTime
+          .ref(Db.infoConnected)
+          .child(Db.currentUser.uid)
           .update(state.toJson());
 
-      await _store
-          .collection('users')
-          .doc(_auth.currentUser!.uid)
+      await Db.store
+          .collection(Db.users)
+          .doc(Db.auth.currentUser!.uid)
           .update(state.toJson());
     }
   }
@@ -57,16 +51,16 @@ class AppObserver with WidgetsBindingObserver {
       lastSeen: DateTime.now().millisecondsSinceEpoch,
     ).toJson();
 
-    if (_auth.currentUser != null) {
-      await _realTime
-          .ref('info/connected')
-          .child(_auth.currentUser!.uid)
+    if (Db.auth.currentUser != null) {
+      await Db.realTime
+          .ref(Db.infoConnected)
+          .child(Db.auth.currentUser!.uid)
           .onDisconnect()
           .update(offline);
 
-      await _store
-          .collection('users')
-          .doc(_auth.currentUser!.uid)
+      await Db.store
+          .collection(Db.users)
+          .doc(Db.auth.currentUser!.uid)
           .update(offline);
     }
   }

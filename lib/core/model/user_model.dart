@@ -21,10 +21,10 @@ class UserModel extends Equatable {
     return {
       "id": id,
       "name": name,
-      "imageUrl": imageUrl,
+      "image_url": imageUrl,
       "phone": phone,
       "active": active,
-      "lastSeen": lastSeen,
+      "last_seen": lastSeen,
     };
   }
 
@@ -32,10 +32,10 @@ class UserModel extends Equatable {
     return UserModel(
       id: json["id"],
       name: json["name"],
-      imageUrl: json["imageUrl"],
+      imageUrl: json["image_url"],
       phone: json["phone"],
       active: json["active"],
-      lastSeen: json["lastSeen"],
+      lastSeen: json["last_seen"] ?? 0,
     );
   }
 
@@ -46,5 +46,6 @@ class UserModel extends Equatable {
         imageUrl,
         phone,
         active,
+        lastSeen,
       ];
 }

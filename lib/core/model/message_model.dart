@@ -13,8 +13,8 @@ class MsgModel extends Equatable {
   });
 
   final String msg;
-  final MessageType type;
   final String msgId;
+  final MessageType type;
   final DateTime timeSent;
   final String senderId;
   final String reciverId;
@@ -25,7 +25,7 @@ class MsgModel extends Equatable {
       msg: json['message'],
       type: (json['type'] as String).toEnum(),
       msgId: json['message_id'],
-      timeSent: DateTime.parse(json['time_sent']),
+      timeSent: DateTime.fromMillisecondsSinceEpoch(json['time_sent']),
       isSeen: json['is_seen'],
       senderId: json['sender_id'],
       reciverId: json['reciver_id'],
@@ -35,9 +35,9 @@ class MsgModel extends Equatable {
   Map<String, dynamic> toJson() {
     return {
       'message': msg,
-      'type': type,
+      'type': type.type,
       'is_seen': isSeen,
-      'time_sent': timeSent.toIso8601String(),
+      'time_sent': timeSent.millisecondsSinceEpoch,
       'message_id': msgId,
       'sender_id': senderId,
       'reciver_id': reciverId,

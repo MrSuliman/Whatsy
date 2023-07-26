@@ -6,11 +6,11 @@ CustomTransitionPage pageAnimation({
   required GoRouterState state,
 }) {
   return CustomTransitionPage(
-    transitionDuration: const Duration(milliseconds: 480),
+    transitionDuration: const Duration(milliseconds: 500),
     child: page,
     transitionsBuilder: (context, animation, _, child) {
       return FadeTransition(
-        opacity: CurveTween(curve: Curves.easeIn).animate(animation),
+        opacity: CurveTween(curve: Curves.ease).animate(animation),
         child: child,
       );
     },

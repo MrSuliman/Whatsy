@@ -15,17 +15,17 @@ class LastMsgModel extends Equatable {
   final DateTime timeSent;
   final String lastMsg;
 
-  factory LastMsgModel.fromMap(Map<String, dynamic> map) {
+  factory LastMsgModel.fromJson(Map<String, dynamic> json) {
     return LastMsgModel(
-      name: map['name'] ?? '',
-      imageUrl: map['image_url'] ?? '',
-      contactId: map['contact_id'] ?? '',
-      timeSent: DateTime.fromMillisecondsSinceEpoch(map['time_sent']),
-      lastMsg: map['last_message'] ?? '',
+      name: json['name'] ?? '',
+      imageUrl: json['image_url'] ?? '',
+      contactId: json['contact_id'] ?? '',
+      timeSent: DateTime.fromMillisecondsSinceEpoch(json['time_sent']),
+      lastMsg: json['last_message'] ?? '',
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'image_url': imageUrl,

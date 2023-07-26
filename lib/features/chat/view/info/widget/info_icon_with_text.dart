@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:whatsy/core/constant/colors.dart';
 
-class IconWithText extends StatelessWidget {
-  const IconWithText({
+class InfoIconWithText extends StatelessWidget {
+  const InfoIconWithText({
     super.key,
     required this.icon,
     required this.text,

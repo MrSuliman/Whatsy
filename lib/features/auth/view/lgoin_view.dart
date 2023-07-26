@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/constant/colors.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/utils/send_code_to_phone.dart';
@@ -49,10 +50,10 @@ class _LoginViewState extends State<LoginView> {
       },
       listener: (context, state) {
         if (state is PhoneVerified) {
-         context.pushReplacement('/profile');
+         context.pushReplacement(profile);
         }
         if (state is SmsCodeSent) {
-          context.pushReplacement('/verify');
+          context.pushReplacement(verify);
         }
         if (state is AuthError) {
           showMsgToUser(context: context, msg: state.error);

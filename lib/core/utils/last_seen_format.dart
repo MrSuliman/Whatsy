@@ -1,4 +1,4 @@
-String lastSeenFormat(lastSeen) {
+String lastSeenFormat(int lastSeen) {
     DateTime now = DateTime.now();
     Duration difference = now.difference(
       DateTime.fromMillisecondsSinceEpoch(lastSeen),

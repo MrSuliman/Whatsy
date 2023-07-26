@@ -1,26 +1,25 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsy/core/widget/avatar_img.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-class ContactTile extends StatelessWidget {
-  const ContactTile({
+class ContactCard extends StatelessWidget {
+  const ContactCard({
     super.key,
     this.title,
     this.subtitle,
     this.onTap,
-    this.textBtn,
     this.icon,
     this.iconBg,
     required this.userImg,
-    this.onPressed,
+    this.trailing,
   });
 
-  final String? title, subtitle, textBtn;
+  final String? title, subtitle;
   final void Function()? onTap;
-  final void Function()? onPressed;
   final IconData? icon;
   final Color? iconBg;
   final String userImg;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +27,7 @@ class ContactTile extends StatelessWidget {
       onTap: onTap,
       dense: true,
       leading: AvatarImg(
+        radius: 28,
         backgroundColor: iconBg,
         backgroundImage:
             userImg.isNotEmpty ? CachedNetworkImageProvider(userImg) : null,
@@ -41,10 +41,7 @@ class ContactTile extends StatelessWidget {
         subtitle ?? '',
         style: Theme.of(context).textTheme.labelMedium,
       ),
-      trailing: TextButton(
-        onPressed: onPressed,
-        child: Text(textBtn ?? ''),
-      ),
+      trailing: trailing,
     );
   }
 }

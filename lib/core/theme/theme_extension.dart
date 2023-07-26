@@ -22,6 +22,12 @@ class MyColors extends ThemeExtension<MyColors> {
     this.profileBg,
     this.blockReportColor,
     this.chatInputColor,
+    this.chatPageBg,
+    this.chatDoodleBg,
+    this.senderChatCardBg,
+    this.reciverChatCardBg,
+    this.yellowCardBgColor,
+    this.yellowCardTextColor,
   });
 
   final Color? greyColor;
@@ -36,6 +42,12 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? profileBg;
   final Color? blockReportColor;
   final Color? chatInputColor;
+  final Color? chatPageBg;
+  final Color? chatDoodleBg;
+  final Color? senderChatCardBg;
+  final Color? reciverChatCardBg;
+  final Color? yellowCardBgColor;
+  final Color? yellowCardTextColor;
 
   static const lightMode = MyColors(
     greyColor: Colory.greyLight,
@@ -50,6 +62,12 @@ class MyColors extends ThemeExtension<MyColors> {
     profileBg: Color(0xFFF7F8FA),
     blockReportColor: Colors.red,
     chatInputColor: Colors.white,
+    chatPageBg: Color(0xFFEFE7DE),
+    chatDoodleBg: Colors.white70,
+    senderChatCardBg: Color(0xFFE7FFDB),
+    reciverChatCardBg: Color(0xFFFFFFFF),
+    yellowCardBgColor: Color(0xFFFFEECC),
+    yellowCardTextColor: Colory.greyLight, // Color(0xFF13191C)
   );
 
   static const darkMode = MyColors(
@@ -65,6 +83,12 @@ class MyColors extends ThemeExtension<MyColors> {
     profileBg: Color(0xFF0B141A),
     blockReportColor: Color(0xFFF15c6D),
     chatInputColor: Colory.bgGrey,
+    chatPageBg: Color(0xFF081419),
+    chatDoodleBg: Color(0xFF172428),
+    senderChatCardBg: Color(0xFF005C4B),
+    reciverChatCardBg: Colory.bgGrey,
+    yellowCardBgColor: Color(0xFF222E35),
+    yellowCardTextColor: Color(0xFFFFD279),
   );
 
   @override
@@ -80,6 +104,12 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? profileBg,
     Color? blockReportColor,
     Color? chatInputColor,
+    Color? chatPageBg,
+    Color? chatDoodleBg,
+    Color? senderChatCardBg,
+    Color? reciverChatCardBg,
+    Color? yellowCardBgColor,
+    Color? yellowCardTextColor,
   }) {
     return MyColors(
       greyColor: greyColor ?? this.greyColor,
@@ -91,8 +121,14 @@ class MyColors extends ThemeExtension<MyColors> {
       photoIconColor: photoIconColor ?? this.photoIconColor,
       photoBgColor: photoBgColor ?? this.photoBgColor,
       profileBg: profileBg ?? this.profileBg,
-      blockReportColor: profileBg ?? this.blockReportColor,
+      blockReportColor: blockReportColor ?? this.blockReportColor,
       chatInputColor: chatInputColor ?? this.chatInputColor,
+      chatPageBg: chatPageBg ?? this.chatPageBg,
+      chatDoodleBg: chatDoodleBg ?? this.chatDoodleBg,
+      senderChatCardBg: senderChatCardBg ?? this.senderChatCardBg,
+      reciverChatCardBg: reciverChatCardBg ?? this.reciverChatCardBg,
+      yellowCardBgColor: yellowCardBgColor ?? this.yellowCardBgColor,
+      yellowCardTextColor: yellowCardTextColor ?? this.yellowCardTextColor,
     );
   }
 
@@ -115,6 +151,15 @@ class MyColors extends ThemeExtension<MyColors> {
       profileBg: Color.lerp(profileBg, other.profileBg, t),
       blockReportColor: Color.lerp(blockReportColor, other.blockReportColor, t),
       chatInputColor: Color.lerp(chatInputColor, other.chatInputColor, t),
+      chatPageBg: Color.lerp(chatPageBg, other.chatPageBg, t),
+      chatDoodleBg: Color.lerp(chatDoodleBg, other.chatDoodleBg, t),
+      senderChatCardBg: Color.lerp(senderChatCardBg, other.senderChatCardBg, t),
+      yellowCardBgColor:
+          Color.lerp(yellowCardBgColor, other.yellowCardBgColor, t),
+      yellowCardTextColor:
+          Color.lerp(yellowCardTextColor, other.yellowCardTextColor, t),
+      reciverChatCardBg:
+          Color.lerp(reciverChatCardBg, other.reciverChatCardBg, t),
     );
   }
 }

@@ -18,7 +18,7 @@ class AvatarImg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: radius,
+      radius: radius ?? 26,
       backgroundImage: backgroundImage,
       backgroundColor: backgroundColor ?? Colory.greyLight.withOpacity(0.3),
       child: backgroundImage == null

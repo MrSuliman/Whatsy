@@ -7,10 +7,10 @@ class ChatBg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image(
-      fit: BoxFit.fill,
+      fit: BoxFit.cover,
       width: double.maxFinite,
       height: double.maxFinite,
-      color: context.theme.greyColor,
+      color: context.theme.chatDoodleBg,
       image: const AssetImage('assets/images/doodle_bg.png'),
     );
   }

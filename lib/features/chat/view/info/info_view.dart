@@ -5,7 +5,7 @@ import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/features/chat/view/info/widget/block_report.dart';
 import 'package:whatsy/features/chat/view/info/widget/custom_list_tile.dart';
-import 'package:whatsy/features/chat/view/info/widget/icon_with_text.dart';
+import 'package:whatsy/features/chat/view/info/widget/info_icon_with_text.dart';
 import 'package:whatsy/features/chat/view/info/widget/info_appbar.dart';
 
 class InfoView extends StatelessWidget {
@@ -52,18 +52,18 @@ class InfoView extends StatelessWidget {
                         children: [
                           if (userModel.id !=
                               FirebaseAuth.instance.currentUser!.uid) ...[
-                            const IconWithText(
+                            const InfoIconWithText(
                               icon: Icons.call_rounded,
                               text: 'Audio',
                             ),
                             const SizedBox(width: 34),
-                            const IconWithText(
+                            const InfoIconWithText(
                               icon: Icons.video_call_rounded,
                               text: 'Video',
                             ),
                             const SizedBox(width: 34),
                           ],
-                          const IconWithText(
+                          const InfoIconWithText(
                             icon: Icons.search_rounded,
                             text: 'Search',
                           ),

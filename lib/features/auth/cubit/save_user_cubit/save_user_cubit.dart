@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/store_file.dart';
 
@@ -18,9 +17,6 @@ class SaveUserCubit extends Cubit<SaveUserState> {
   }) async {
     emit(SaveUserLoading());
 
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    final userCollection = FirebaseFirestore.instance.collection('users');
-
     try {
       //  ! Need some refactor here,
       var image = imageUrl is String ? '' : imageUrl;
@@ -28,20 +24,23 @@ class SaveUserCubit extends Cubit<SaveUserState> {
       if (imageUrl != null && imageUrl is! String) {
         image = await storeFileToStorage(
           file: imageUrl,
-          path: 'profile_image/${auth.currentUser!.uid}',
+          path: '${Db.profileImage}/${Db.currentUser.uid}',
         );
       }
 
       UserModel user = UserModel(
-        id: auth.currentUser!.uid,
+        id: Db.currentUser.uid,
         name: name,
         imageUrl: image,
-        phone: auth.currentUser!.phoneNumber!,
+        phone: Db.currentUser.phoneNumber!,
         active: true,
-        lastSeen: DateTime.now().microsecondsSinceEpoch,
+        lastSeen: DateTime.now().millisecondsSinceEpoch,
       );
 
-      await userCollection.doc(auth.currentUser!.uid).set(user.toJson());
+      await Db.store
+          .collection(Db.users)
+          .doc(Db.currentUser.uid)
+          .set(user.toJson());
 
       emit(SaveUserSuccess());
     } catch (e) {

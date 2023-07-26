@@ -12,14 +12,14 @@ class StateModel extends Equatable {
   factory StateModel.fromJson(Map<String, dynamic> json) {
     return StateModel(
       active: json["active"],
-      lastSeen: json["lastSeen"],
+      lastSeen: json["last_seen"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       "active": active,
-      "lastSeen": lastSeen,
+      "last_seen": lastSeen,
     };
   }
 

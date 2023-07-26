@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/widget/custom_btn.dart';
 import 'package:whatsy/features/welcome/view/widget/welcome_img.dart';
 import 'package:whatsy/features/welcome/view/widget/privacy_policy.dart';
@@ -31,7 +32,7 @@ class WelcomeView extends StatelessWidget {
                 const PrivacyPolicy(),
                 CustomBtn(
                   onPressed: () {
-                    context.pushReplacement('/login');
+                    context.pushReplacement(login);
                   },
                   text: "AGREE AND CONTINUE",
                 ),

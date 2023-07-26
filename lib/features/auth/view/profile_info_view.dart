@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/utils/loading_dialog.dart';
 import 'package:whatsy/core/utils/msg_to_user.dart';
@@ -53,7 +54,7 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
           showLoadingDialog(context, text: 'Saving user info ...');
         } else if (state is SaveUserSuccess) {
           context.pop();
-          context.pushReplacement('/home');
+          context.pushReplacement(home);
         } else if (state is SaveUserError) {
           context.pop();
           showMsgToUser(context: context, msg: state.error);
@@ -137,7 +138,8 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
         context: context,
         msg: 'Please provide a username.',
       );
-    } else if (_nameController!.text.length < 3 || _nameController!.text.length > 20) {
+    } else if (_nameController!.text.length < 3 ||
+        _nameController!.text.length > 20) {
       showMsgToUser(
         context: context,
         msg: 'A username length should be between 3-20 characters.',

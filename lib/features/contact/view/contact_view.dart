@@ -69,9 +69,9 @@ class _ContactViewState extends State<ContactView> {
                   slivers: [
                     const ContactTopTile(),
                     const ContactTitle(title: 'Contacts on whatsy'),
-                    ContactsOnWhatsy(firebaseContact: state.contacts),
+                    ContactsOnWhatsy(firebaseContact: state.contacts[0]),
                     const ContactTitle(title: 'Invite to whatsy'),
-                    InviteToWhatsy(phoneContact: state.contacts),
+                    InviteToWhatsy(phoneContact: state.contacts[1]),
                     const ContactBottomTile(),
                   ],
                 );

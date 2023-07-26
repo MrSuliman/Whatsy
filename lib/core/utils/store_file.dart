@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:whatsy/core/constant/data_base.dart';
 
 Future<String> storeFileToStorage({var file, required String path}) async {
   UploadTask? uploadTask;
-  Reference storage = FirebaseStorage.instance.ref().child(path);
+  Reference storage = Db.storage.ref().child(path);
 
   if (file is File) {
     uploadTask = storage.putFile(file);

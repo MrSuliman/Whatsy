@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whatsy/core/helper/app_observer.dart';
+import 'package:whatsy/core/helper/my_behavior.dart';
+import 'package:whatsy/core/model/last_message.dart';
 import 'package:whatsy/core/model/state_model.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
-import 'package:whatsy/features/home/view/call_view.dart';
+import 'package:whatsy/core/widget/skelton.dart';
+import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/home/view/main_home_view.dart';
-import 'package:whatsy/features/home/view/group_view.dart';
 import 'package:whatsy/features/home/view/status_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -40,8 +43,8 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
-      initialIndex: 1,
+      length: 2,
+      initialIndex: 0,
       child: Scaffold(
         appBar: CustomAppBar(
           title: const Text('Whatsy'),
@@ -58,26 +61,33 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             CustomIcon(icon: Icons.search_outlined, onPressed: () {}),
             CustomIcon(icon: Icons.more_vert_rounded, onPressed: () {}),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             indicatorWeight: 3,
-            tabs: [
-              Icon(
-                Icons.groups_2,
-                size: 28,
-              ),
-              Tab(text: "CHAT"),
-              Tab(text: "STATUS"),
-              Tab(text: "CALLS"),
+            labelStyle: Theme.of(context).textTheme.titleMedium,
+            tabs: const [
+              Tab(text: "Chat"),
+              Tab(text: "Status"),
             ],
           ),
         ).appBar(context),
-        body: const TabBarView(
-          children: [
-            GroupView(),
-            MainHomeView(),
-            StatusView(),
-            CallView(),
-          ],
+        body: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: StreamBuilder<List<LastMsgModel>>(
+            stream: BlocProvider.of<ChatCubit>(context).fetchLastMsg(),
+            builder: (_, snapshot) {
+              return TabBarView(
+                children: [
+                  if (snapshot.connectionState == ConnectionState.active) ...[
+                    MainHomeView(lastMsgModel: snapshot.data!),
+                  ],
+                  if (snapshot.connectionState == ConnectionState.waiting) ...[
+                    const Skelton(),
+                  ],
+                  const StatusView(),
+                ],
+              );
+            },
+          ),
         ),
       ),
     );

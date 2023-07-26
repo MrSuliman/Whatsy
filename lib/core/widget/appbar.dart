@@ -29,7 +29,7 @@ class CustomAppBar {
       bottom: bottom,
       automaticallyImplyLeading: automaticallyImplyLeading ?? false,
       elevation: elevation ?? 0,
-      titleSpacing: titleSpacing ?? 0,
+      titleSpacing: titleSpacing,
       leadingWidth: 42,
       centerTitle: centerTitle ?? true,
       leading: leading,

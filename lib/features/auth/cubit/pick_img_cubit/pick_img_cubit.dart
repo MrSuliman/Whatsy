@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/features/auth/widget/image_item.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -53,7 +53,7 @@ class PickImgCubit extends Cubit<PickImgState> {
             ontTap: () {
               cameraImg = null;
               galleryImg = snapshot.data;
-              context.go('/profile', extra: galleryImg);
+              context.go(profile, extra: galleryImg);
             },
             image: snapshot.data!,
           );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/constant/colors.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/widget/bottom_sheet_header.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
@@ -57,7 +58,7 @@ showImagePickerType(BuildContext context) {
                     CustomIcon(
                       onPressed: () {
                         Navigator.pop(context);
-                        context.push('/gallery');
+                        context.push(gallery);
                       },
                       icon: Icons.photo_camera_back_rounded,
                       color: Colory.greenDark,
