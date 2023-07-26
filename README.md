@@ -1,6 +1,6 @@
 ###### Errors I Faced in whatsy app
 
-# [RetrievalTimeoutHelper] Timed out waiting for SMS.
+# No sms message came to check the number.
 - enable Google Play Integrity API from [google cloud website].
 
 # how to keep the same instance on both two screens?
