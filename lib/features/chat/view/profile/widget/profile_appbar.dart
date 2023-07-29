@@ -1,18 +1,18 @@
 import 'dart:math';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/model/user_model.dart';
+import 'package:whatsy/core/widget/avatar_img.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 
-class InfoAppBar extends SliverPersistentHeaderDelegate {
-  const InfoAppBar(this.userModel);
+class ProfileAppBar extends SliverPersistentHeaderDelegate {
+  const ProfileAppBar(this.userModel);
 
   final UserModel userModel;
   final double maxHeight = 180;
-  final double minHeight = kToolbarHeight + 32;
+  final double minHeight = 88;
   final double maxImgSize = 130;
-  final double minImgSize = 40;
+  final double minImgSize = 44;
 
   @override
   Widget build(
@@ -27,6 +27,7 @@ class InfoAppBar extends SliverPersistentHeaderDelegate {
       minImgSize,
       maxImgSize,
     );
+
     final double imgPosition = (middle * (1 - percent)).clamp(
       minImgSize,
       maxImgSize,
@@ -43,18 +44,18 @@ class InfoAppBar extends SliverPersistentHeaderDelegate {
           children: [
             Positioned(
               top: MediaQuery.of(context).viewPadding.top + 16,
-              left: imgPosition + 50,
+              left: imgPosition + 52,
               child: Text(
                 userModel.name,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.white.withOpacity(percent2),
                 ),
               ),
             ),
             Positioned(
-              left: 0,
-              top: MediaQuery.of(context).viewPadding.top + 2,
+              left: 4,
+              top: MediaQuery.of(context).viewPadding.top + 4,
               child: BackButton(
                 onPressed: () => context.pop(),
                 color: _iconColor.transform(scroll),
@@ -62,7 +63,7 @@ class InfoAppBar extends SliverPersistentHeaderDelegate {
             ),
             Positioned(
               right: 0,
-              top: MediaQuery.of(context).viewPadding.top + 2,
+              top: MediaQuery.of(context).viewPadding.top + 8,
               child: CustomIcon(
                 onPressed: () {},
                 icon: Icons.more_vert,
@@ -72,17 +73,14 @@ class InfoAppBar extends SliverPersistentHeaderDelegate {
             Positioned(
               left: imgPosition,
               top: MediaQuery.of(context).viewPadding.top,
-              bottom: 1,
-              child: Hero(
-                tag: 'profile_img',
-                child: Container(
-                  width: imgSize,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(userModel.imageUrl),
-                    ),
+              bottom: 2,
+              child: SizedBox(
+                width: imgSize,
+                child: Hero(
+                  tag: 'profile_img',
+                  child: AvatarImg(
+                    size: imgPosition - 12,
+                    imageUrl: userModel.imageUrl,
                   ),
                 ),
               ),
@@ -105,5 +103,5 @@ class InfoAppBar extends SliverPersistentHeaderDelegate {
   double get minExtent => minHeight;
 
   @override
-  bool shouldRebuild(InfoAppBar oldDelegate) => false;
+  bool shouldRebuild(ProfileAppBar oldDelegate) => false;
 }

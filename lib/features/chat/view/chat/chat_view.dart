@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:whatsy/core/helper/my_behavior.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/features/chat/view/chat/widget/chat_app_bar.dart';
@@ -26,9 +25,7 @@ class _ChatViewState extends State<ChatView> {
     _scrollController = ScrollController();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        
-      }
+          _scrollController.position.maxScrollExtent) {}
     });
     super.initState();
   }
@@ -46,21 +43,18 @@ class _ChatViewState extends State<ChatView> {
       child: Scaffold(
         backgroundColor: context.theme.chatPageBg,
         appBar: chatAppBar(context, widget.userModel),
-        body: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: Stack(
-            children: [
-              const ChatBg(),
-              MsgsList(
-                userModel: widget.userModel,
-                scrollController: _scrollController,
-              ),
-              ChatInput(
-                reciverId: widget.userModel.id,
-                scrollController: _scrollController,
-              ),
-            ],
-          ),
+        body: Stack(
+          children: [
+            const ChatBg(),
+            MsgsList(
+              userModel: widget.userModel,
+              scrollController: _scrollController,
+            ),
+            ChatInput(
+              reciverId: widget.userModel.id,
+              scrollController: _scrollController,
+            ),
+          ],
         ),
       ),
     );

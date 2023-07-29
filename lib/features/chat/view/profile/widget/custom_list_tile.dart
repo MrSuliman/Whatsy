@@ -21,7 +21,12 @@ class CustomListTile extends StatelessWidget {
       onTap: () {},
       contentPadding: const EdgeInsets.fromLTRB(25, 5, 10, 5),
       leading: leading,
-      title: Text(title),
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontWeight: FontWeight.normal,
+            ),
+      ),
       subtitle: subtitle != null
           ? Text(
               subtitle!,

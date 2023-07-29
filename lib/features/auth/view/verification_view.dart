@@ -30,7 +30,7 @@ class _VerificationViewState extends State<VerificationView> {
       },
       listener: (context, state) {
         if (state is PhoneVerified) {
-          context.pushReplacement(profile);
+          context.pushReplacement(info);
         }
         if (state is AuthError) {
           showMsgToUser(context: context, msg: state.error);

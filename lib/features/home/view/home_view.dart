@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/helper/app_observer.dart';
 import 'package:whatsy/core/helper/my_behavior.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/model/last_message.dart';
 import 'package:whatsy/core/model/state_model.dart';
 import 'package:whatsy/core/widget/appbar.dart';
@@ -10,6 +12,7 @@ import 'package:whatsy/core/widget/skelton.dart';
 import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/home/view/main_home_view.dart';
 import 'package:whatsy/features/home/view/status_view.dart';
+import 'package:whatsy/features/home/widget/floating_btn.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -40,14 +43,19 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     super.dispose();
   }
 
+  int initialIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      initialIndex: 0,
+      initialIndex: initialIndex,
       child: Scaffold(
         appBar: CustomAppBar(
-          title: const Text('Whatsy'),
+          title: Text(
+            'Whatsy',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           centerTitle: false,
           titleSpacing: 22,
           actions: [
@@ -62,11 +70,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
             CustomIcon(icon: Icons.more_vert_rounded, onPressed: () {}),
           ],
           bottom: TabBar(
-            indicatorWeight: 3,
+            indicatorWeight: 4,
             labelStyle: Theme.of(context).textTheme.titleMedium,
             tabs: const [
-              Tab(text: "Chat"),
-              Tab(text: "Status"),
+              Tab(text: "Chats"),
+              Tab(text: "Updates"),
             ],
           ),
         ).appBar(context),
@@ -88,6 +96,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               );
             },
           ),
+        ),
+        floatingActionButton: FloatingBtn(
+          onPressed: () {
+            context.push(contact);
+          },
+          icon: initialIndex == 0 ? Icons.chat : Icons.edit,
         ),
       ),
     );

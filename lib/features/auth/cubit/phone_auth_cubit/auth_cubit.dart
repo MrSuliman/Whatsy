@@ -100,6 +100,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logOut(BuildContext context) async {
     AppObserver().offlineUser();
     await Db.auth.signOut();
-    context.pushReplacement(welcome);
+    if (context.mounted) {
+      context.pushReplacement(welcome);
+    }
   }
 }

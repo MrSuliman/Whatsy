@@ -6,9 +6,11 @@ class AttachContainer extends StatelessWidget {
   const AttachContainer({
     super.key,
     required this.containerHeight,
+    this.galleryTap,
   });
 
   final double containerHeight;
+  final void Function()? galleryTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,32 +23,35 @@ class AttachContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: context.theme.reciverChatCardBg,
       ),
-      child: const Center(
+      child: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  AttachIconWithText(
+                  const AttachIconWithText(
                     color: Color(0xFF7F66FE),
                     icon: Icons.book,
                     text: 'File',
                   ),
-                  AttachIconWithText(
+                  const AttachIconWithText(
                     color: Color(0xFFFE2E74),
                     icon: Icons.camera,
                     text: 'camera',
                   ),
-                  AttachIconWithText(
-                    color: Color(0xFFC861F9),
-                    icon: Icons.photo,
-                    text: 'Gallery',
+                  GestureDetector(
+                    onTap: galleryTap,
+                    child: const AttachIconWithText(
+                      color: Color(0xFFC861F9),
+                      icon: Icons.photo,
+                      text: 'Gallery',
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Row(
+              const SizedBox(height: 20),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AttachIconWithText(

@@ -10,6 +10,7 @@ class Db {
 
 // * Cloud Storage
   static const String profileImage = 'profile_image';
+  static const String media = 'media';
   static final FirebaseStorage storage = FirebaseStorage.instance;
 
 // * Store

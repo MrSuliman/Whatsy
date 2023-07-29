@@ -1,10 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/constant/data_base.dart';
+import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/is_that_you.dart';
+import 'package:whatsy/core/widget/avatar_img.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/features/auth/cubit/phone_auth_cubit/auth_cubit.dart';
 import 'package:whatsy/core/utils/last_seen_format.dart';
@@ -12,24 +13,17 @@ import 'package:whatsy/core/utils/last_seen_format.dart';
 AppBar chatAppBar(BuildContext context, UserModel userModel) {
   return AppBar(
     elevation: 0,
-    titleSpacing: -2,
+    titleSpacing: -4,
     title: InkWell(
-      onTap: () => context.push('/info', extra: userModel),
+      onTap: () => context.push(profile, extra: userModel),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Hero(
             tag: 'profile_img',
-            child: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider(userModel.imageUrl),
-                ),
-              ),
+            child: AvatarImg(
+              radius: 22,
+              imageUrl: userModel.imageUrl,
             ),
           ),
           const SizedBox(width: 10),
@@ -39,9 +33,8 @@ AppBar chatAppBar(BuildContext context, UserModel userModel) {
               Text(
                 '${userModel.name} ${isThatYou(userModel.id, Db.currentUser.uid)}',
                 softWrap: true,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: const TextStyle(color: Colors.white),
               ),
-              const SizedBox(height: 3),
               Db.currentUser.uid != userModel.id
                   ? StreamBuilder(
                       stream: BlocProvider.of<AuthCubit>(context)
@@ -56,11 +49,12 @@ AppBar chatAppBar(BuildContext context, UserModel userModel) {
                                 ? 'online'
                                 : lastSeenFormat(snapshot.data!.lastSeen),
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
                                 .copyWith(
-                                  overflow: TextOverflow.ellipsis,
+                                  color: Colors.white.withOpacity(0.7),
                                 ),
                           );
                         }
@@ -68,8 +62,9 @@ AppBar chatAppBar(BuildContext context, UserModel userModel) {
                     )
                   : Text(
                       'Message yourself',
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            overflow: TextOverflow.ellipsis,
+                            color: Colors.white.withOpacity(0.7),
                           ),
                     ),
             ],

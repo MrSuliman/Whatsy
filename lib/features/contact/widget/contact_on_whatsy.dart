@@ -4,7 +4,7 @@ import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/helper/routes.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/is_that_you.dart';
-import 'package:whatsy/features/contact/widget/contact_card.dart';
+import 'package:whatsy/core/widget/contact_card.dart';
 
 class ContactsOnWhatsy extends StatelessWidget {
   const ContactsOnWhatsy({super.key, required this.firebaseContact});
@@ -26,11 +26,10 @@ class ContactsOnWhatsy extends StatelessWidget {
               );
             },
             userImg: firebaseContact[index].imageUrl,
-            icon: firebaseContact[index].imageUrl.isEmpty
-                ? Icons.person
-                : null,
-            title:
-                '${firebaseContact[index].name} ${isThatYou(firebaseContact[index].id, Db.currentUser.uid)}',
+            title: Text(
+              '${firebaseContact[index].name} ${isThatYou(firebaseContact[index].id, Db.currentUser.uid)}',
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             subtitle: 'Hey there! I\'m using whatsy',
           );
         },

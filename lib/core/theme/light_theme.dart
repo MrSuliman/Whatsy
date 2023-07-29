@@ -51,11 +51,9 @@ ThemeData lightTheme() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold
-        ),
-        foregroundColor: Colory.greenLight,
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+        foregroundColor: Colory.greenDark,
+        shape: const StadiumBorder(),
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
@@ -77,13 +75,17 @@ ThemeData lightTheme() {
     textTheme: const TextTheme(
       // * title used in appbar
       titleLarge: TextStyle(
-        fontSize: 16,
+        fontSize: 22,
         color: Colors.white,
+        fontWeight: FontWeight.bold,
       ),
       titleMedium: TextStyle(
-        color: Colors.black,
+        fontSize: 16,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
       ),
       titleSmall: TextStyle(
+        fontSize: 12,
         color: Colors.black,
       ),
       // * headline used as a title in the body
@@ -95,12 +97,13 @@ ThemeData lightTheme() {
       // * body used in body
       bodyLarge: TextStyle(
         color: Colors.black,
+        fontWeight: FontWeight.bold,
         fontSize: 22,
       ),
       bodyMedium: TextStyle(
-        fontSize: 15,
+        fontSize: 16,
         color: Colors.black,
-          fontWeight: FontWeight.w500
+        fontWeight: FontWeight.w500,
       ),
       // * labelLarge used in appbar
       labelLarge: TextStyle(
@@ -112,7 +115,7 @@ ThemeData lightTheme() {
         fontSize: 13,
         color: Colory.greyLight,
       ),
-       labelSmall: TextStyle(
+      labelSmall: TextStyle(
         fontSize: 12,
         letterSpacing: 0,
         color: Colory.greyLight,
@@ -123,7 +126,7 @@ ThemeData lightTheme() {
       backgroundColor: Colory.greenLight,
     ),
     listTileTheme: const ListTileThemeData(
-      iconColor: Colory.greyDark, 
+      iconColor: Colory.greyDark,
       tileColor: Colory.light,
     ),
     switchTheme: const SwitchThemeData(

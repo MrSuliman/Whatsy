@@ -57,13 +57,9 @@ ThemeData darkTheme() {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        textStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold
-        ),
+        textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         foregroundColor: Colory.greenLight,
-        shape: const StadiumBorder()
-        
+        shape: const StadiumBorder(),
       ),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
@@ -85,11 +81,14 @@ ThemeData darkTheme() {
     textTheme: const TextTheme(
       // * title used in appbar
       titleLarge: TextStyle(
-        fontSize: 16,
-        color: Colors.white,
+        fontSize: 22,
+        color: Colory.greyDark,
+        fontWeight: FontWeight.bold,
       ),
       titleMedium: TextStyle(
+        fontSize: 16,
         color: Colors.white,
+        fontWeight: FontWeight.w500,
       ),
       titleSmall: TextStyle(
         color: Colors.white,
@@ -102,11 +101,12 @@ ThemeData darkTheme() {
       ),
       // * body used in body
       bodyLarge: TextStyle(
-        color: Colors.white,
         fontSize: 22,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
       ),
       bodyMedium: TextStyle(
-        fontSize: 15,
+        fontSize: 16,
         color: Colors.white,
         fontWeight: FontWeight.w500,
       ),

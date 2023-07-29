@@ -18,15 +18,12 @@ class SaveUserCubit extends Cubit<SaveUserState> {
     emit(SaveUserLoading());
 
     try {
-      //  ! Need some refactor here,
-      var image = imageUrl is String ? '' : imageUrl;
-
-      if (imageUrl != null && imageUrl is! String) {
-        image = await storeFileToStorage(
-          file: imageUrl,
-          path: '${Db.profileImage}/${Db.currentUser.uid}',
-        );
-      }
+      var image = (imageUrl is! String && imageUrl != null)
+          ? await storeFileToStorage(
+              file: imageUrl,
+              path: '${Db.profileImage}/${Db.currentUser.uid}',
+            )
+          : '';
 
       UserModel user = UserModel(
         id: Db.currentUser.uid,

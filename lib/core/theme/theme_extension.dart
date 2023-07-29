@@ -50,7 +50,7 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? yellowCardTextColor;
 
   static const lightMode = MyColors(
-    greyColor: Colory.greyLight,
+    greyColor: Colory.greyDark,
     blueColor: Colory.blueLight,
     langBtnColor: Color(0xFFF7F8FA),
     highlightColor: Color(0xFFE8E8ED),
@@ -71,7 +71,7 @@ class MyColors extends ThemeExtension<MyColors> {
   );
 
   static const darkMode = MyColors(
-    greyColor: Colory.greyDark,
+    greyColor: Colory.greyLight,
     blueColor: Colory.blueDark,
     langBtnColor: Color(0xFF182229),
     highlightColor: Color(0xFF09141A),

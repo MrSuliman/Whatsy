@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:whatsy/core/helper/my_behavior.dart';
 import 'package:whatsy/core/model/message_model.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
@@ -67,24 +68,27 @@ class _MsgsListState extends State<MsgsList> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SizedBox(); // ShimmerMsgs();
           } else if (snapshot.connectionState == ConnectionState.active) {
-            return ListView.builder(
-              controller: widget.scrollController,
-              shrinkWrap: true,
-              reverse: true,
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    if (index == snapshot.data!.length - 1) const YellowCard(),
-                    if (isHereDate(index, snapshot))
-                      DateCard(dateFormat(snapshot, index)),
-                    MsgCard(
-                      snapshot.data![index],
-                      haveNip(index, snapshot),
-                    ),
-                  ],
-                );
-              },
+            return ScrollConfiguration(
+              behavior: MyBehavior(),
+              child: ListView.builder(
+                controller: widget.scrollController,
+                shrinkWrap: true,
+                reverse: true,
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      if (index == snapshot.data!.length - 1) const YellowCard(),
+                      if (isHereDate(index, snapshot))
+                        DateCard(dateFormat(snapshot, index)),
+                      MsgCard(
+                        snapshot.data![index],
+                        haveNip(index, snapshot),
+                      ),
+                    ],
+                  );
+                },
+              ),
             );
           } else {
             return const Center(

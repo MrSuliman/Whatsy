@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:whatsy/core/constant/colors.dart';
-import 'package:whatsy/core/helper/routes.dart';
+import 'package:whatsy/core/constant/consts.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
 import 'package:whatsy/core/widget/bottom_sheet_header.dart';
 import 'package:whatsy/core/widget/custom_icon.dart';
 import 'package:whatsy/core/widget/short_h_bar.dart';
 import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
+import 'package:whatsy/features/auth/view/gallery_view.dart';
 
 showImagePickerType(BuildContext context) {
   return showModalBottomSheet(
@@ -33,7 +33,7 @@ showImagePickerType(BuildContext context) {
                     CustomIcon(
                       onPressed: () async {
                         Navigator.pop(context);
-                        BlocProvider.of<PickImgCubit>(context)
+                        await BlocProvider.of<PickImgCubit>(context)
                             .pickImgFromCamera(context);
                       },
                       icon: Icons.camera_alt_rounded,
@@ -56,9 +56,16 @@ showImagePickerType(BuildContext context) {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CustomIcon(
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.pop(context);
-                        context.push(gallery);
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return BlocProvider<PickImgCubit>.value(
+                              value: Consts.pickImgCubit,
+                              child: const GalleryView(),
+                            );
+                          },
+                        ));
                       },
                       icon: Icons.photo_camera_back_rounded,
                       color: Colory.greenDark,

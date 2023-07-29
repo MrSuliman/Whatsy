@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -10,37 +8,26 @@ import 'package:whatsy/core/utils/msg_to_user.dart';
 import 'package:whatsy/core/widget/appbar.dart';
 import 'package:whatsy/core/widget/custom_btn.dart';
 import 'package:whatsy/core/widget/custom_input.dart';
+import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
-import 'package:whatsy/features/auth/widget/profile_avatar.dart';
+import 'package:whatsy/features/auth/widget/info_avatar.dart';
 
-class ProfileInfoView extends StatefulWidget {
-  const ProfileInfoView({
-    Key? key,
-    this.galleryImg,
-    this.cameraImg,
-  }) : super(key: key);
-  final File? cameraImg;
-  final Uint8List? galleryImg;
+class InfoView extends StatefulWidget {
+  const InfoView({Key? key}) : super(key: key);
 
   @override
-  State<ProfileInfoView> createState() => _ProfileInfoViewState();
+  State<InfoView> createState() => _InfoViewState();
 }
 
-class _ProfileInfoViewState extends State<ProfileInfoView> {
-  late TextEditingController? _nameController;
+class _InfoViewState extends State<InfoView> {
+  final TextEditingController _nameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AutovalidateMode _autoValidate = AutovalidateMode.disabled;
 
   @override
-  void initState() {
-    super.initState();
-    _nameController = TextEditingController();
-  }
-
-  @override
   void dispose() {
     super.dispose();
-    _nameController!.dispose();
+    _nameController.dispose();
   }
 
   @override
@@ -87,12 +74,9 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
                       color: context.theme.greyColor,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(40, 24, 40, 24),
-                    child: AvatarImg(
-                      cameraImg: widget.cameraImg,
-                      galleryImg: widget.galleryImg,
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(40, 24, 40, 24),
+                    child: InfoAvatar(),
                   ),
                   Row(
                     children: [
@@ -133,13 +117,13 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
   }
 
   Future<void> _saveUser(BuildContext context) async {
-    if (_nameController!.text.trim().isEmpty) {
+    if (_nameController.text.trim().isEmpty) {
       showMsgToUser(
         context: context,
         msg: 'Please provide a username.',
       );
-    } else if (_nameController!.text.length < 3 ||
-        _nameController!.text.length > 20) {
+    } else if (_nameController.text.length < 3 ||
+        _nameController.text.length > 20) {
       showMsgToUser(
         context: context,
         msg: 'A username length should be between 3-20 characters.',
@@ -147,8 +131,10 @@ class _ProfileInfoViewState extends State<ProfileInfoView> {
     } else {
       await BlocProvider.of<SaveUserCubit>(context).saveUserInfo(
         context,
-        name: _nameController!.text,
-        imageUrl: widget.cameraImg ?? widget.galleryImg ?? '',
+        name: _nameController.text,
+        imageUrl: BlocProvider.of<PickImgCubit>(context).galleryImg ??
+            BlocProvider.of<PickImgCubit>(context).cameraImg ??
+            '',
       );
     }
     _autoValidate = AutovalidateMode.always;

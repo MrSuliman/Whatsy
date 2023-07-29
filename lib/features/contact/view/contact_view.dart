@@ -49,7 +49,7 @@ class _ContactViewState extends State<ContactView> {
             children: [
               Text(
                 'Select Contact',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 3),
               const ContactCounting(),

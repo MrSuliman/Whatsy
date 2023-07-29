@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/utils/share_sms_link.dart';
-import 'package:whatsy/features/contact/widget/contact_card.dart';
+import 'package:whatsy/core/widget/contact_card.dart';
 
 class InviteToWhatsy extends StatelessWidget {
   const InviteToWhatsy({super.key, required this.phoneContact});
@@ -20,8 +20,10 @@ class InviteToWhatsy extends StatelessWidget {
               index: index,
             ),
             userImg: phoneContact[index].imageUrl,
-            icon: Icons.person,
-            title: phoneContact[index].name,
+            title: Text(
+              phoneContact[index].name,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             subtitle: phoneContact[index].phone,
             trailing: TextButton(
               onPressed: () => shareSmsLink(

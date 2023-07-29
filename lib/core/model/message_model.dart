@@ -12,7 +12,7 @@ class MsgModel extends Equatable {
     required this.reciverId,
   });
 
-  final String msg;
+  final dynamic msg;
   final String msgId;
   final MessageType type;
   final DateTime timeSent;

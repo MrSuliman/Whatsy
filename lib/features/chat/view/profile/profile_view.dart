@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:whatsy/core/helper/my_behavior.dart';
 import 'package:whatsy/core/model/user_model.dart';
 import 'package:whatsy/core/theme/theme_extension.dart';
-import 'package:whatsy/features/chat/view/info/widget/block_report.dart';
-import 'package:whatsy/features/chat/view/info/widget/custom_list_tile.dart';
-import 'package:whatsy/features/chat/view/info/widget/info_icon_with_text.dart';
-import 'package:whatsy/features/chat/view/info/widget/info_appbar.dart';
+import 'package:whatsy/features/chat/view/profile/widget/block_report.dart';
+import 'package:whatsy/features/chat/view/profile/widget/custom_list_tile.dart';
+import 'package:whatsy/features/chat/view/profile/widget/profile_icon_with_text.dart';
+import 'package:whatsy/features/chat/view/profile/widget/profile_appbar.dart';
 
-class InfoView extends StatelessWidget {
-  const InfoView({super.key, required this.userModel});
+class ProfileView extends StatelessWidget {
+  const ProfileView({super.key, required this.userModel});
 
   final UserModel userModel;
 
@@ -25,7 +25,7 @@ class InfoView extends StatelessWidget {
             slivers: [
               SliverPersistentHeader(
                 pinned: true,
-                delegate: InfoAppBar(userModel),
+                delegate: ProfileAppBar(userModel),
               ),
               SliverToBoxAdapter(
                 child: Container(
@@ -38,7 +38,7 @@ class InfoView extends StatelessWidget {
                         userModel.name,
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 3),
                       Text(
                         userModel.phone,
                         style: TextStyle(
@@ -52,18 +52,18 @@ class InfoView extends StatelessWidget {
                         children: [
                           if (userModel.id !=
                               FirebaseAuth.instance.currentUser!.uid) ...[
-                            const InfoIconWithText(
+                            const ProfileIconWithText(
                               icon: Icons.call_rounded,
                               text: 'Audio',
                             ),
                             const SizedBox(width: 34),
-                            const InfoIconWithText(
+                            const ProfileIconWithText(
                               icon: Icons.video_call_rounded,
                               text: 'Video',
                             ),
                             const SizedBox(width: 34),
                           ],
-                          const InfoIconWithText(
+                          const ProfileIconWithText(
                             icon: Icons.search_rounded,
                             text: 'Search',
                           ),
@@ -79,13 +79,13 @@ class InfoView extends StatelessWidget {
                     const SizedBox(height: 10),
                     ListTile(
                       contentPadding: const EdgeInsets.only(left: 30),
-                      title: const Text('Hey there, I\'m using whatsy'),
+                      title: Text(
+                        'Hey there, I\'m using whatsy',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       subtitle: Text(
                         '17 June, 2023',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          color: context.theme.greyColor,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ),
                     const SizedBox(height: 10),

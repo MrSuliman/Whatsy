@@ -6,11 +6,68 @@ import 'package:whatsy/core/constant/message_type.dart';
 import 'package:whatsy/core/model/last_message.dart';
 import 'package:whatsy/core/model/message_model.dart';
 import 'package:whatsy/core/model/user_model.dart';
+import 'package:whatsy/core/utils/store_file.dart';
 
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial());
+
+  Future<void> sendFile({
+    required MessageType msgType,
+    UserModel? senderData,
+    required String receiverId,
+    required dynamic file,
+  }) async {
+    String lastMsg;
+    final msgId = const Uuid().v1();
+    final DateTime timeSent = DateTime.now();
+    String storeMedia = await storeFileToStorage(
+      path: '${Db.media}/${msgType.type}/${senderData!.id}/$receiverId/$msgId',
+      file: file,
+    );
+    final UserModel reciverId = await Db.store
+        .collection(Db.users)
+        .doc(receiverId)
+        .get()
+        .then((value) => UserModel.fromJson(value.data()!));
+
+    switch (msgType) {
+      case MessageType.image:
+        lastMsg = '📸 Photo';
+        break;
+      case MessageType.audio:
+        lastMsg = 'Voice record';
+        break;
+      case MessageType.video:
+        lastMsg = '📸 Video';
+        break;
+      case MessageType.gif:
+        lastMsg = '📸 GIF';
+        break;
+      default:
+        lastMsg = 'GIF message';
+    }
+
+    _saveMsg(
+      msg: storeMedia,
+      type: msgType,
+      msgId: msgId,
+      timeSent: timeSent,
+      senderId: senderData.id,
+      reciverId: receiverId,
+      senderName: senderData.name,
+      reciverName: reciverId.name,
+    );
+
+    _saveLastMsg(
+      senderData: senderData,
+      reciverData: reciverId,
+      reciverId: reciverId.id,
+      timeSent: timeSent,
+      lastMsg: lastMsg,
+    );
+  }
 
   Stream<List<MsgModel>> fetchPaginatedMsgs(String receiverId) {
     final collectionReference = Db.store
@@ -62,6 +119,7 @@ class ChatCubit extends Cubit<ChatState> {
     required String msg,
     required String reciverId,
     required UserModel? senderData,
+    required MessageType msgType,
   }) async {
     try {
       final msgId = const Uuid().v1();
@@ -74,7 +132,7 @@ class ChatCubit extends Cubit<ChatState> {
         msg: msg,
         msgId: msgId,
         timeSent: timeSent,
-        type: MessageType.text,
+        type: msgType,
         senderId: senderData!.id,
         reciverId: reciverId,
         senderName: senderData.name,
@@ -176,10 +234,10 @@ class ChatCubit extends Cubit<ChatState> {
   }
 }
 
-  // Stream<UserModel> getUserStatus({required String id}) {
-  //   return _store
-  //       .collection('users')
-  //       .doc(id)
-  //       .snapshots()
-  //       .map((snapshot) => UserModel.fromJson(snapshot.data()!));
-  // }
+// Stream<UserModel> getUserStatus({required String id}) {
+//   return _store
+//       .collection('users')
+//       .doc(id)
+//       .snapshots()
+//       .map((snapshot) => UserModel.fromJson(snapshot.data()!));
+// }

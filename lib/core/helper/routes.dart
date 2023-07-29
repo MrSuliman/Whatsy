@@ -1,8 +1,8 @@
-import 'dart:typed_data';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
+import 'package:whatsy/core/constant/consts.dart';
 import 'package:whatsy/core/constant/data_base.dart';
 import 'package:whatsy/core/helper/page_animation.dart';
 import 'package:whatsy/core/model/user_model.dart';
@@ -10,11 +10,11 @@ import 'package:whatsy/features/auth/cubit/pick_img_cubit/pick_img_cubit.dart';
 import 'package:whatsy/features/auth/cubit/save_user_cubit/save_user_cubit.dart';
 import 'package:whatsy/features/auth/view/gallery_view.dart';
 import 'package:whatsy/features/auth/view/lgoin_view.dart';
-import 'package:whatsy/features/auth/view/profile_info_view.dart';
+import 'package:whatsy/features/auth/view/info_view.dart';
 import 'package:whatsy/features/auth/view/verification_view.dart';
 import 'package:whatsy/features/chat/cubit/chat_cubit.dart';
 import 'package:whatsy/features/chat/view/chat/chat_view.dart';
-import 'package:whatsy/features/chat/view/info/info_view.dart';
+import 'package:whatsy/features/chat/view/profile/profile_view.dart';
 import 'package:whatsy/features/contact/cubit/contact_cubit.dart';
 import 'package:whatsy/features/contact/view/contact_view.dart';
 import 'package:whatsy/features/home/view/home_view.dart';
@@ -53,7 +53,7 @@ abstract class Routes {
         builder: (context, state) => const VerificationView(),
       ),
       GoRoute(
-        path: profile, // profile
+        path: info, // info
         builder: (context, state) {
           return MultiBlocProvider(
             providers: [
@@ -61,24 +61,16 @@ abstract class Routes {
                 create: (context) => SaveUserCubit(),
               ),
               BlocProvider<PickImgCubit>(
-                create: (context) => PickImgCubit(),
+                create: (context) => Consts.pickImgCubit,
               ),
             ],
-            child: ProfileInfoView(
-              // cameraImg: state.extra as File?,
-              galleryImg: state.extra as Uint8List?,
-            ),
+            child: const InfoView(),
           );
         },
       ),
       GoRoute(
         path: gallery, // picker
-        builder: (context, state) {
-          return BlocProvider<PickImgCubit>(
-            create: (context) => PickImgCubit(),
-            child: const GalleryView(),
-          );
-        },
+        builder: (context, state) => const GalleryView(),
       ),
       GoRoute(
         path: home,
@@ -101,11 +93,11 @@ abstract class Routes {
         ),
       ),
       GoRoute(
-        path: info,
+        path: profile,
         pageBuilder: (context, state) {
           return pageAnimation(
             state: state,
-            page: InfoView(userModel: state.extra as UserModel),
+            page: ProfileView(userModel: state.extra as UserModel),
           );
         },
       ),
@@ -117,9 +109,9 @@ const String start = '/';
 const String welcome = '/welcome';
 const String login = '/login';
 const String verify = '/verify';
-const String profile = '/profile';
+const String info = '/info';
 const String gallery = '/gallery';
 const String home = '/home';
 const String contact = '/contact';
 const String chat = '/chat';
-const String info = '/info';
+const String profile = '/profile';
