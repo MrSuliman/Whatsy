@@ -13,6 +13,29 @@ part 'chat_state.dart';
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial());
 
+  // ! not used yet, until doing ui first.
+  Future<void> deleteMsg(String receiverId, String msgId) async {
+    // ! delete msg from sender
+    await Db.store
+        .collection(Db.users)
+        .doc(Db.auth.currentUser!.uid)
+        .collection(Db.chats)
+        .doc(receiverId)
+        .collection(Db.chats)
+        .doc(msgId)
+        .delete();
+
+    // ! delete msg from receiver
+    await Db.store
+        .collection(Db.users)
+        .doc(receiverId)
+        .collection(Db.chats)
+        .doc(Db.auth.currentUser!.uid)
+        .collection(Db.chats)
+        .doc(msgId)
+        .delete();
+  }
+
   Future<void> sendFile({
     required MessageType msgType,
     UserModel? senderData,
@@ -23,10 +46,10 @@ class ChatCubit extends Cubit<ChatState> {
     final msgId = const Uuid().v1();
     final DateTime timeSent = DateTime.now();
     String storeMedia = await storeFileToStorage(
-      path: '${Db.media}/${msgType.type}/${senderData!.id}/$receiverId/$msgId',
       file: file,
+      path: '${Db.media}/${msgType.type}/${senderData!.id}/$receiverId/$msgId',
     );
-    final UserModel reciverId = await Db.store
+    final UserModel receiverData = await Db.store
         .collection(Db.users)
         .doc(receiverId)
         .get()
@@ -37,7 +60,7 @@ class ChatCubit extends Cubit<ChatState> {
         lastMsg = '📸 Photo';
         break;
       case MessageType.audio:
-        lastMsg = 'Voice record';
+        lastMsg = '🎤 Audio';
         break;
       case MessageType.video:
         lastMsg = '📸 Video';
@@ -57,36 +80,37 @@ class ChatCubit extends Cubit<ChatState> {
       senderId: senderData.id,
       reciverId: receiverId,
       senderName: senderData.name,
-      reciverName: reciverId.name,
+      reciverName: receiverData.name,
     );
 
     _saveLastMsg(
       senderData: senderData,
-      reciverData: reciverId,
-      reciverId: reciverId.id,
+      reciverData: receiverData,
+      reciverId: receiverData.id,
       timeSent: timeSent,
       lastMsg: lastMsg,
     );
   }
 
-  Stream<List<MsgModel>> fetchPaginatedMsgs(String receiverId) {
-    final collectionReference = Db.store
-        .collection(Db.users)
-        .doc(Db.currentUser.uid)
-        .collection(Db.chats)
-        .doc(receiverId)
-        .collection(Db.messages);
+  // ! not used any more
+  // Stream<List<MsgModel>> fetchPaginatedMsgs(String receiverId) {
+  //   final collectionReference = Db.store
+  //       .collection(Db.users)
+  //       .doc(Db.currentUser.uid)
+  //       .collection(Db.chats)
+  //       .doc(receiverId)
+  //       .collection(Db.messages);
 
-    var query = collectionReference.orderBy('time_sent', descending: true);
+  //   var query = collectionReference.orderBy('time_sent', descending: true);
 
-    return query.snapshots().map((event) {
-      List<MsgModel> messages = [];
-      for (var msg in event.docs) {
-        messages.add(MsgModel.fromJson(msg.data()));
-      }
-      return messages;
-    });
-  }
+  //   return query.snapshots().map((event) {
+  //     List<MsgModel> messages = [];
+  //     for (var msg in event.docs) {
+  //       messages.add(MsgModel.fromJson(msg.data()));
+  //     }
+  //     return messages;
+  //   });
+  // }
 
   Stream<List<LastMsgModel>> fetchLastMsg() {
     return Db.store
@@ -234,10 +258,5 @@ class ChatCubit extends Cubit<ChatState> {
   }
 }
 
-// Stream<UserModel> getUserStatus({required String id}) {
-//   return _store
-//       .collection('users')
-//       .doc(id)
-//       .snapshots()
-//       .map((snapshot) => UserModel.fromJson(snapshot.data()!));
-// }
+
+

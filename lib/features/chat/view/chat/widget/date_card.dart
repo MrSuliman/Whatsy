@@ -8,15 +8,22 @@ class DateCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      padding: const EdgeInsets.all(6),
-      decoration: BoxDecoration(
-          color: context.theme.reciverChatCardBg,
-          borderRadius: BorderRadius.circular(10)),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.labelSmall,
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        padding: const EdgeInsets.all(6),
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+          color: context.theme.receiverChatCardBg,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: Theme.of(context)
+              .textTheme
+              .labelSmall!
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

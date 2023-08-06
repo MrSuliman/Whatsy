@@ -21,7 +21,7 @@ class AttachContainer extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: context.theme.reciverChatCardBg,
+        color: context.theme.receiverChatCardBg,
       ),
       child: Center(
         child: SingleChildScrollView(

@@ -25,7 +25,7 @@ class MyColors extends ThemeExtension<MyColors> {
     this.chatPageBg,
     this.chatDoodleBg,
     this.senderChatCardBg,
-    this.reciverChatCardBg,
+    this.receiverChatCardBg,
     this.yellowCardBgColor,
     this.yellowCardTextColor,
   });
@@ -45,7 +45,7 @@ class MyColors extends ThemeExtension<MyColors> {
   final Color? chatPageBg;
   final Color? chatDoodleBg;
   final Color? senderChatCardBg;
-  final Color? reciverChatCardBg;
+  final Color? receiverChatCardBg;
   final Color? yellowCardBgColor;
   final Color? yellowCardTextColor;
 
@@ -65,7 +65,7 @@ class MyColors extends ThemeExtension<MyColors> {
     chatPageBg: Color(0xFFEFE7DE),
     chatDoodleBg: Colors.white70,
     senderChatCardBg: Color(0xFFE7FFDB),
-    reciverChatCardBg: Color(0xFFFFFFFF),
+    receiverChatCardBg: Color(0xFFFFFFFF),
     yellowCardBgColor: Color(0xFFFFEECC),
     yellowCardTextColor: Colory.greyLight, // Color(0xFF13191C)
   );
@@ -86,7 +86,7 @@ class MyColors extends ThemeExtension<MyColors> {
     chatPageBg: Color(0xFF081419),
     chatDoodleBg: Color(0xFF172428),
     senderChatCardBg: Color(0xFF005C4B),
-    reciverChatCardBg: Colory.bgGrey,
+    receiverChatCardBg: Colory.bgGrey,
     yellowCardBgColor: Color(0xFF222E35),
     yellowCardTextColor: Color(0xFFFFD279),
   );
@@ -107,7 +107,7 @@ class MyColors extends ThemeExtension<MyColors> {
     Color? chatPageBg,
     Color? chatDoodleBg,
     Color? senderChatCardBg,
-    Color? reciverChatCardBg,
+    Color? receiverChatCardBg,
     Color? yellowCardBgColor,
     Color? yellowCardTextColor,
   }) {
@@ -126,7 +126,7 @@ class MyColors extends ThemeExtension<MyColors> {
       chatPageBg: chatPageBg ?? this.chatPageBg,
       chatDoodleBg: chatDoodleBg ?? this.chatDoodleBg,
       senderChatCardBg: senderChatCardBg ?? this.senderChatCardBg,
-      reciverChatCardBg: reciverChatCardBg ?? this.reciverChatCardBg,
+      receiverChatCardBg: receiverChatCardBg ?? this.receiverChatCardBg,
       yellowCardBgColor: yellowCardBgColor ?? this.yellowCardBgColor,
       yellowCardTextColor: yellowCardTextColor ?? this.yellowCardTextColor,
     );
@@ -158,8 +158,8 @@ class MyColors extends ThemeExtension<MyColors> {
           Color.lerp(yellowCardBgColor, other.yellowCardBgColor, t),
       yellowCardTextColor:
           Color.lerp(yellowCardTextColor, other.yellowCardTextColor, t),
-      reciverChatCardBg:
-          Color.lerp(reciverChatCardBg, other.reciverChatCardBg, t),
+      receiverChatCardBg:
+          Color.lerp(receiverChatCardBg, other.receiverChatCardBg, t),
     );
   }
 }

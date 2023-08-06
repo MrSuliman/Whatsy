@@ -10,11 +10,11 @@ import 'package:image_picker/image_picker.dart';
 part 'pick_img_state.dart';
 
 class PickImgCubit extends Cubit<PickImgState> {
-  PickImgCubit() : super(PickedImgInitial());
+  PickImgCubit() : super(PickedInitial());
 
   int limit = 20;
   int currentPage = 0;
-  List<Widget> imagesList = [];
+  List<Widget> assetsList = [];
   File? cameraImg;
   Uint8List? galleryImg;
   final ScrollController controller = ScrollController();
@@ -22,13 +22,15 @@ class PickImgCubit extends Cubit<PickImgState> {
   Future<void> scrollListener() async {
     if (controller.position.pixels == controller.position.maxScrollExtent) {
       currentPage++;
-      await fetchGallery();
+      await fetchGalleryImg();
     }
   }
 
   Future<void> pickImgFromCamera(context) async {
     try {
-      await ImagePicker().pickImage(source: ImageSource.camera).then((value) {
+      await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 25)
+          .then((value) {
         if (value != null) {
           galleryImg = null;
           cameraImg = File(value.path);
@@ -36,7 +38,7 @@ class PickImgCubit extends Cubit<PickImgState> {
         }
       });
     } catch (e) {
-      emit(PickImgError(error: e.toString()));
+      emit(PickedError(error: e.toString()));
     }
   }
 
@@ -51,7 +53,7 @@ class PickImgCubit extends Cubit<PickImgState> {
             ontTap: () {
               cameraImg = null;
               galleryImg = snapshot.data;
-              emit(GalleryImgPicked(galleryImg));
+              emit(GalleryPicked(galleryImg));
               Navigator.pop(context, galleryImg);
             },
             image: snapshot.data!,
@@ -62,7 +64,7 @@ class PickImgCubit extends Cubit<PickImgState> {
     );
   }
 
-  Future<void> fetchGallery() async {
+  Future<void> fetchGalleryImg() async {
     final permission = await PhotoManager.requestPermissionExtend();
     if (!permission.isAuth) return PhotoManager.openSetting();
 
@@ -78,13 +80,60 @@ class PickImgCubit extends Cubit<PickImgState> {
       );
 
       for (var asset in photos) {
-        imagesList.add(_pickImgFromGallery(asset));
+        assetsList.add(_pickImgFromGallery(asset));
       }
 
-      emit(PickedImgInitial());
-      emit(GallerySuccess(images: imagesList));
+      emit(PickedInitial());
+      emit(GallerySuccess(images: assetsList));
     } catch (e) {
-      emit(PickImgError(error: e.toString()));
+      emit(PickedError(error: e.toString()));
+    }
+  }
+
+FutureBuilder<Uint8List?> _pickVideoFromGallery(AssetEntity asset) {
+    return FutureBuilder(
+      future: asset.thumbnailDataWithSize(
+        const ThumbnailSize.square(25),
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return ImageItem(
+            ontTap: () {
+              cameraImg = null;
+              galleryImg = snapshot.data;
+              emit(GalleryPicked(galleryImg));
+              Navigator.pop(context, galleryImg);
+            },
+            image: snapshot.data!,
+          );
+        }
+        return const SizedBox();
+      },
+    );
+  }
+  Future<void> fetchGalleryVideo() async {
+    final permission = await PhotoManager.requestPermissionExtend();
+    if (!permission.isAuth) return PhotoManager.openSetting();
+
+    try {
+      List<AssetPathEntity> albums = await PhotoManager.getAssetPathList(
+        onlyAll: true,
+        type: RequestType.video,
+      );
+
+      List<AssetEntity> videos = await albums[0].getAssetListPaged(
+        page: currentPage,
+        size: limit,
+      );
+
+      for (var asset in videos) {
+        assetsList.add(_pickVideoFromGallery(asset));
+      }
+
+      emit(PickedInitial());
+      emit(GallerySuccess(images: assetsList));
+    } catch (e) {
+      emit(PickedError(error: e.toString()));
     }
   }
 }

@@ -109,7 +109,7 @@ class _ChatInputState extends State<ChatInput> {
 
   @override
   Widget build(BuildContext context) {
-    bool isRecording = _recorder.isRecording;
+    // bool isRecording = _recorder.isRecording;
 
     return Container(
       alignment: const Alignment(0, 1),
@@ -176,17 +176,14 @@ class _ChatInputState extends State<ChatInput> {
                 const SizedBox(width: 5),
                 GestureDetector(
                   onLongPress: () async {
-                    await _recorder.toggle();
+                    await _recorder.toggle(context, widget.reciverId);
                     setState(() {});
                   },
                   onLongPressEnd: (val) async {
-                    await _recorder.toggle();
+                    await _recorder.toggle(context, widget.reciverId);
                     setState(() {});
                     debugPrint("عتشيييييييييييييييييييي");
                   },
-                  // onLongPressCancel: () async {
-                  //   debugPrint("اتكنسللللللللللللللللل");
-                  // },
                   child: CustomIcon(
                     onPressed: () async => await _sendTextMsg(context),
                     icon: _isThereMsg ? Icons.send : Icons.mic_none_rounded,

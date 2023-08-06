@@ -21,11 +21,15 @@ class HomeView extends StatefulWidget {
   State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
+class _HomeViewState extends State<HomeView>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
   final appObserver = AppObserver();
+
+  late TabController _tabController;
 
   @override
   void initState() {
+    _tabController = TabController(vsync: this, length: 2);
     WidgetsBinding.instance.addObserver(appObserver);
     appObserver.onlineUser(
       StateModel(
@@ -43,66 +47,66 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  int initialIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      initialIndex: initialIndex,
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: Text(
-            'Whatsy',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          centerTitle: false,
-          titleSpacing: 22,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 2.0),
-              child: CustomIcon(
-                onPressed: () async {},
-                icon: Icons.camera_alt_outlined,
-              ),
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: Text(
+          'Whatsy',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        centerTitle: false,
+        titleSpacing: 22,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 2.0),
+            child: CustomIcon(
+              onPressed: () async {},
+              icon: Icons.camera_alt_outlined,
             ),
-            CustomIcon(icon: Icons.search_outlined, onPressed: () {}),
-            CustomIcon(icon: Icons.more_vert_rounded, onPressed: () {}),
+          ),
+          CustomIcon(icon: Icons.search_outlined, onPressed: () {}),
+          CustomIcon(icon: Icons.more_vert_rounded, onPressed: () {}),
+        ],
+        bottom: TabBar(
+          indicatorWeight: 4,
+          controller: TabController(
+            length: 2,
+            vsync: this,
+            initialIndex: 0,
+          ),
+          labelStyle: Theme.of(context).textTheme.titleMedium,
+          tabs: const [
+            Tab(text: "Chats"),
+            Tab(text: "Updates"),
           ],
-          bottom: TabBar(
-            indicatorWeight: 4,
-            labelStyle: Theme.of(context).textTheme.titleMedium,
-            tabs: const [
-              Tab(text: "Chats"),
-              Tab(text: "Updates"),
-            ],
-          ),
-        ).appBar(context),
-        body: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: StreamBuilder<List<LastMsgModel>>(
-            stream: BlocProvider.of<ChatCubit>(context).fetchLastMsg(),
-            builder: (_, snapshot) {
-              return TabBarView(
-                children: [
-                  if (snapshot.connectionState == ConnectionState.active) ...[
-                    MainHomeView(lastMsgModel: snapshot.data!),
-                  ],
-                  if (snapshot.connectionState == ConnectionState.waiting) ...[
-                    const Skelton(),
-                  ],
-                  const StatusView(),
+        ),
+      ).appBar(context),
+      body: ScrollConfiguration(
+        behavior: MyBehavior(),
+        child: StreamBuilder<List<LastMsgModel>>(
+          stream: BlocProvider.of<ChatCubit>(context).fetchLastMsg(),
+          builder: (_, snapshot) {
+            return TabBarView(
+              controller: _tabController,
+              children: [
+                if (snapshot.connectionState == ConnectionState.active) ...[
+                  MainHomeView(lastMsgModel: snapshot.data!),
                 ],
-              );
-            },
-          ),
-        ),
-        floatingActionButton: FloatingBtn(
-          onPressed: () {
-            context.push(contact);
+                if (snapshot.connectionState == ConnectionState.waiting) ...[
+                  const Skelton(),
+                ],
+                const StatusView(),
+              ],
+            );
           },
-          icon: initialIndex == 0 ? Icons.chat : Icons.edit,
         ),
+      ),
+      floatingActionButton: FloatingBtn(
+        onPressed: () {
+          context.push(contact);
+        },
+        icon: Icons.chat,
       ),
     );
   }

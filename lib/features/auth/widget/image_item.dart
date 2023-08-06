@@ -28,6 +28,7 @@ class ImageItem extends StatelessWidget {
             ),
             borderRadius: BorderRadius.circular(5),
             image: DecorationImage(
+              
               image: MemoryImage(image),
               fit: BoxFit.cover,
             ),

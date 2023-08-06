@@ -18,7 +18,7 @@ class _GalleryViewState extends State<GalleryView> {
     BlocProvider.of<PickImgCubit>(context).controller.addListener(
           BlocProvider.of<PickImgCubit>(context).scrollListener,
         );
-    BlocProvider.of<PickImgCubit>(context).fetchGallery();
+    BlocProvider.of<PickImgCubit>(context).fetchGalleryImg();
     super.initState();
   }
 
@@ -40,20 +40,18 @@ class _GalleryViewState extends State<GalleryView> {
       body: BlocBuilder<PickImgCubit, PickImgState>(
         builder: (context, state) {
           if (state is GallerySuccess) {
-            return Padding(
-              padding: const EdgeInsets.all(4),
-              child: GridView.builder(
-                controller: BlocProvider.of<PickImgCubit>(context).controller,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                ),
-                itemCount: state.images.length,
-                itemBuilder: (context, index) {
-                  return state.images[index];
-                },
+            return GridView.builder(
+              padding: const EdgeInsets.only(bottom: 20),
+              controller: BlocProvider.of<PickImgCubit>(context).controller,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
               ),
+              itemCount: state.images.length,
+              itemBuilder: (context, index) {
+                return state.images[index];
+              },
             );
-          } else if (state is PickImgError) {
+          } else if (state is PickedError) {
             return Center(
               child: Text(state.error),
             );

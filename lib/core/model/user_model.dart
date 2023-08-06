@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-class UserModel extends Equatable {
+class UserModel {
   final String id;
   final String name;
   final String imageUrl;
@@ -38,14 +36,4 @@ class UserModel extends Equatable {
       lastSeen: json["last_seen"] ?? 0,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        id,
-        name,
-        imageUrl,
-        phone,
-        active,
-        lastSeen,
-      ];
 }

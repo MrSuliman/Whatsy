@@ -16,12 +16,12 @@ class InfoAvatar extends StatelessWidget {
           return CircleAvatar(
             radius: 80,
             backgroundColor: context.theme.photoBgColor,
-            backgroundImage: (state is GalleryImgPicked)
+            backgroundImage: (state is GalleryPicked)
                 ? MemoryImage(state.galleryImg!)
                 : (state is CameraImgPicked)
                     ? FileImage(state.cameraImg!) as ImageProvider
                     : null,
-            child: (state is! GalleryImgPicked && state is! CameraImgPicked)
+            child: (state is! GalleryPicked && state is! CameraImgPicked)
                 ? Icon(
                     Icons.add_a_photo_rounded,
                     size: 48,

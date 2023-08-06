@@ -5,17 +5,17 @@ import 'package:whatsy/core/constant/data_base.dart';
 
 Future<String> storeFileToStorage({var file, required String path}) async {
   UploadTask? uploadTask;
-  Reference storage = Db.storage.ref().child(path);
+  Reference reference = Db.storage.ref().child(path);
 
   if (file is File) {
-    uploadTask = storage.putFile(file);
+    uploadTask = reference.putFile(file);
   }
 
   if (file is Uint8List) {
-    uploadTask = storage.putData(file);
+    uploadTask = reference.putData(file);
   }
 
   TaskSnapshot snapshot = await uploadTask!;
-  String imageUrl = await snapshot.ref.getDownloadURL();
-  return imageUrl;
+  String url = await snapshot.ref.getDownloadURL();
+  return url;
 }
