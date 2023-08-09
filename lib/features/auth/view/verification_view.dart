@@ -33,6 +33,7 @@ class _VerificationViewState extends State<VerificationView> {
           context.pushReplacement(info);
         }
         if (state is AuthError) {
+          context.pop();
           showMsgToUser(context: context, msg: state.error);
         }
       },

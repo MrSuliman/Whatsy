@@ -55,15 +55,11 @@ class AuthCubit extends Cubit<AuthState> {
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         verificationFailed: (FirebaseAuthException e) {
-          Navigator.pop(context);
-          if (e.code == 'invalid-phone-number') {
-            emit(AuthError(error: 'Invalid phone number.'));
-            emit(AuthInitial());
-          }
+          emit(AuthError(error: 'Invalid phone number.'));
+          emit(AuthInitial());
         },
       );
     } catch (_) {
-      Navigator.pop(context);
       emit(AuthError(error: 'Something went wrong!, please try again.'));
     }
   }
@@ -83,11 +79,9 @@ class AuthCubit extends Cubit<AuthState> {
       );
       await signIn(credential);
     } on FirebaseAuthException catch (_) {
-      Navigator.pop(context);
       emit(AuthError(error: 'Invalid sms code, check again.'));
       emit(AuthInitial());
     } catch (_) {
-      Navigator.pop(context);
       emit(AuthError(error: 'Something went wrong, resend sms code.'));
     }
   }

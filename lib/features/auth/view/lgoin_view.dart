@@ -50,12 +50,13 @@ class _LoginViewState extends State<LoginView> {
       },
       listener: (context, state) {
         if (state is PhoneVerified) {
-         context.pushReplacement(info);
+          context.pushReplacement(info);
         }
         if (state is SmsCodeSent) {
           context.pushReplacement(verify);
         }
         if (state is AuthError) {
+          Navigator.pop(context);
           showMsgToUser(context: context, msg: state.error);
         }
       },
